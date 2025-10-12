@@ -1,0 +1,57 @@
+mapi gnl ile satır satır okuyup iki boyutlu bir arraye atmalıyız.
+daha sonrasında bu arrayde floodfill fonksiyonu ile gezip haritanın oynanabilir olup olmadığına bakmalıyız
+dikdörtgen olup olmadığına ft_strlen ile ilk satırın uzunluğunu alıp diğer satırlarla karşılaştırarak bakabiliriz.
+haritanın etrafının 1 olup olmadığını kontrol etmeliyiz. ilk ve son satırın tamamı 1 olmalı, diğer satırlarda ise ilk ve son karakter 1 olmalı. mapi gezerek çözeriz.
+haritada en az bir adet C, bir adet E ve bir adet P karakteri olmalı ve P karakteri sadece bir adet olmalı. bunları da mapi gezerek sayabiliriz.
+map parsing ile başlarız bitince MiniLibX öğrenmeye başlarız.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Adım	Konu	Amaç	Kontrol Noktası
+0.1	MiniLibX Kurulumu	Kütüphanenin derleyici ayarlarını (Makefile) yapmak ve projenize dahil etmek.	Kütüphaneyi başarıyla derleyebilmek.
+0.2	Temel Pencere Yönetimi	mlx_init() ve mlx_new_window() fonksiyonlarını kullanarak boş bir pencere açmak.	Başarılı bir şekilde açılan ve kapanan bir pencere görmek.
+0.3	Event Döngüsü	mlx_loop() fonksiyonunu kullanarak pencerenin açık kalmasını ve olayları beklemesini sağlamak.	Açılan pencerenin kendi kendine kapanmaması.
+0.4	Pencere Kapatma Olayı	ESC tuşuna basıldığında veya pencerenin 'kapat' (X) düğmesine basıldığında programı düzgünce sonlandırmak. (mlx_key_hook veya mlx_hook ile eventleri yakalama)	Pencerenin düzgün bir şekilde kapanması ve tüm belleğin serbest bırakılması (leak olmaması).
+
+
+Aşama 1: Veri Yapıları ve Harita Yönetimi
+Adım	Konu	Amaç	Kontrol Noktası
+1.1	Ana Veri Yapısı (Struct)	Oyunun tüm durumunu (MiniLibX bağlantıları, pencere, harita, oyuncu pozisyonu, adım sayısı, toplanabilir sayısı vb.) tutacak bir struct oluşturmak.	Kodun başında temiz bir t_game veya benzeri bir struct yapısına sahip olmak.
+1.2	Harita Okuma	Get Next Line (GNL) projesinden gelen veya başka bir yöntemle, harita dosyasını (.ber) okuyup, haritayı dinamik olarak ayırılmış bir char** (dizi dizisi) bellekte tutmak.	Harita içeriğinin terminale doğru şekilde yazdırılabilmesi.
+1.3	Harita Geçerlilik Kontrolü	Haritanın kurallara (dikdörtgen olması, duvarlarla çevrili olması, bir başlangıç (P), bir çıkış (E) ve en az bir toplanabilir (C) içermesi) uygunluğunu kontrol eden fonksiyonlar yazmak.	Geçersiz bir harita verildiğinde programın uygun hata mesajı ile sonlanması.
+
+
+Aşama 2: Grafikler ve Görselleştirme
+Adım	Konu	Amaç	Kontrol Noktası
+2.1	Görüntü Yükleme	Oyun varlıklarını (duvar, zemin, oyuncu, toplanabilir, çıkış) temsil eden XPM veya PNG dosyalarını MiniLibXe yüklemek (mlx_xpm_file_to_image() veya benzeri).	Yüklenen görüntülerin adreslerinin ana struct içinde saklanması.
+2.2	Izgara Çizimi	Harita yapısındaki her bir karaktere (örneğin, '1', '0', 'P') karşılık gelen görüntüyü bulup, mlx_put_image_to_window() ile pencereye doğru koordinatlarda (izgaraya göre) çizmek.	Haritanın tümünün ekranda, doğru görüntülerle görünmesi.
+2.3	Görüntü Güncelleme Fonksiyonu	Tüm haritayı baştan aşağı çizecek bir render() veya draw_map() fonksiyonu oluşturmak. (Bu fonksiyon, her hareketten sonra çağrılacak.)	Tek bir fonksiyondan haritanın tamamını çizebilmek.
+
+
+Aşama 3: Oyun Mantığı ve Hareket
+Adım	Konu	Amaç	Kontrol Noktası
+3.1	Oyuncu Hareketi (Temel)	Klavye tuşları (W, A, S, D) basıldığında, oyuncunun bellekteki pozisyonunu (struct içindeki koordinatları) buna göre değiştirmek.	Tuşa basıldığında terminale oyuncunun yeni koordinatlarının yazdırılması.
+3.2	Çarpışma Kontrolü	Yeni pozisyonun bir duvara ('1') denk gelip gelmediğini kontrol etmek. Duvar ise hareketi engellemek.	Oyuncunun duvardan geçememesi.
+3.3	Oyun Durumu Güncelleme	Başarılı bir hareketten sonra: 1. Adım sayısını artırmak. 2. render() fonksiyonunu çağırarak ekranı yeniden çizmek (oyuncunun yeni pozisyonda görünmesi).	Oyuncunun ekranda hareket etmesi ve her harekette adım sayısının terminale yazdırılması.
+
+
+Aşama 4: Oyun Kuralları ve Tamamlama
+Adım	Konu	Amaç	Kontrol Noktası
+4.1	Toplanabilirler (Collectibles)	Oyuncu bir toplanabilir ('C') konumuna geldiğinde, haritadaki o karateri ('0' gibi) değiştirerek toplanmış sayısını artırmak ve ekrandan görüntüsünü kaldırmak.	Tüm toplanabilirlerin başarılı bir şekilde kaybolması ve sayısının doğru tutulması.
+4.2	Adım Sayacı Gösterimi	Mevcut adım sayısını pencerenin üstüne veya terminale mlx_string_put() fonksiyonu ile veya her hareket sonrası terminale yazdırmak.	Oyuncunun attığı her adımın doğru şekilde ekranda/terminalde güncellenmesi.
+4.3	Oyunu Bitirme Kontrolü	Oyuncu çıkış ('E') karosuna ulaştığında, tüm toplanabilirlerin toplanıp toplanmadığını kontrol etmek. Toplandıysa oyunu başarıyla sonlandırmak. Toplanmadıysa hareketi engellemek.	Oyunun sadece tüm 'C'ler toplandıktan sonra 'E'den çıkılarak bitirilebilmesi.
+4.4	Bellek Yönetimi	Programın sonunda mlx_destroy_window(), mlx_destroy_image() ve free() fonksiyonları ile dinamik olarak ayrılmış tüm belleği (özellikle harita yapısını) serbest bırakmak.	valgrind ile kontrol edildiğinde 0 bytes leaked sonucu almak.
