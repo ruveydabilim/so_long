@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/12 22:50:34 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/14 18:31:33 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,15 @@
 # include "../external/libft/libft.h"
 # include "../external/get_next_line/get_next_line.h"
 # include <fcntl.h>
+
+typedef struct s_map
+{
+	int	collectable;
+	int	player;
+	int	exit;
+}	t_map;
+
+char	**map_parser(char *arg);
+int		map_validation(char **map);
+
 #endif
