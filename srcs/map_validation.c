@@ -6,22 +6,22 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/14 18:44:55 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/21 18:27:59 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static	void	floodfill(char ***map, int x, int y)
+static	void	floodfill(char **map, int x, int y)
 {
-	if ((*map[x][y]) != 1)
-		(*map[x][y]) == 'P';
+	if (map[x][y] != '1' || map[x][y] != 'P')
+		map[x][y] = 'P';
 	else
 		return ;
-	floodfill(*map, x + 1, y);
-	floodfill(*map, x - 1, y);
-	floodfill(*map, x, y + 1);
-	floodfill(*map, x, y - 1);
+	floodfill(map, x + 1, y);
+	floodfill(map, x - 1, y);
+	floodfill(map, x, y + 1);
+	floodfill(map, x, y - 1);
 }
 
 static int	wall_check(char **map)
@@ -31,14 +31,14 @@ static int	wall_check(char **map)
 
 	j = 0;
 	i = 0;
-	while (map[0][i])
+	while (map[0][i] && map[0][i] != '\n')
 		if (map[0][i++] != '1')
 			return (0);
 	i = 0;
 	while (map[i])
 		i++;
-	while (map[i][j])
-		if (map[i][j++] != 1)
+	while (map[i - 1][j] && map[i - 1][j] != '\n')
+		if (map[i - 1][j++] != '1')
 			return (0);
 	i = 1;
 	while (map[i][j - 1])
@@ -53,6 +53,7 @@ static t_map	*map_chars(char **map, int x, int y)
 	t_map	*maps;
 
 	temp = 0;
+	maps = malloc(sizeof(t_map *));
 	while (map[x][y])
 	{
 		if (y != temp)
@@ -61,11 +62,15 @@ static t_map	*map_chars(char **map, int x, int y)
 		while (map[x][y])
 		{
 			if (map[x][y] == 'P')
-				maps->player++;
+			{
+				maps->player.x = x;
+				maps->player.y = y;
+				maps->player.count++;
+			}
 			if (map[x][y] == 'E')
-				maps->exit++;
+				maps->exit.count++;
 			if (map[x][y] == 'C')
-				maps->collectable++;
+				maps->collectable.count++;
 			if (x == 0)
 				temp = y;
 			y++;
@@ -86,9 +91,11 @@ int	map_validation(char **map)
 	maps = map_chars(map, x, y);
 	if (!maps)
 		return (0);
-	if (maps->exit != 1 || maps->player != 1 || maps->collectable < 1)
+	if (maps->exit.count != 1 || maps->player.count != 1
+		|| maps->collectable.count < 1)
 		return (0);
 	if (!wall_check(map))
 		return (0);
-	floodfill (&map); //buraya player ın konumunu at. ve floodfill mantığını iyi kavra.
+	floodfill (map, maps->player.x, maps->player.y);
+	return (1);
 }

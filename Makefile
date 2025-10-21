@@ -1,8 +1,10 @@
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-SRCS = main.c utils.c map_parser.c map_validation.c
+CFLAGS = -g -Wall -Wextra -Werror
+SRC = main.c map_parser.c map_validation.c
+GNL = ./external/get_next_line/get_next_line.c ./external/get_next_line/get_next_line_utils.c 
+SRCS = $(addprefix srcs/, $(SRC))
 OBJS = $(SRCS:.c=.o)
 LIBFT_DIR = ./external/libft/
 LIBFT = $(LIBFT_DIR)libft.a
@@ -10,13 +12,12 @@ PRINTF_DIR = ./external/ft_printf/
 PRINTF = $(PRINTF_DIR)libftprintf.a
 MLX_DIR = ./external/mlx/
 MLX = $(MLX_DIR)libmlx.a
-INCLUDES = ./includes $(LIBFT) $(PRINTF) $(MLX)
-MLX_FLAGS = -lmlx -lm -lXext -lX11 -lz
+INCLUDES = $(LIBFT) $(PRINTF) $(MLX)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(MLX_FLAGS) $(INCLUDES)
+$(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(MLX)
+	$(CC) $(CFLAGS) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
