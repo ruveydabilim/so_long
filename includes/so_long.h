@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/21 18:24:37 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/23 18:55:41 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ typedef struct s_mchar
 
 typedef struct s_map
 {
-	t_mchar	collectable;
+	t_mchar	*collectable;
 	t_mchar	player;
 	t_mchar	exit;
+	int		collectables;
 }	t_map;
 
 char	**map_parser(char *arg);

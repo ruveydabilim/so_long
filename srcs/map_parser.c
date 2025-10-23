@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 22:44:48 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/21 18:44:44 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/23 18:51:49 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static int	count_lines(char *arg)
 	char	*line;
 
 	fd = open(arg, O_RDONLY);
+	if (fd < 0)
+		return (0);
 	count = 0;
 	line = get_next_line(fd);
 	while (line)

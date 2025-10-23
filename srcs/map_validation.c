@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/21 18:27:59 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/23 18:56:29 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static t_map	*map_chars(char **map, int x, int y)
 			if (map[x][y] == 'E')
 				maps->exit.count++;
 			if (map[x][y] == 'C')
-				maps->collectable.count++;
+				maps->collectables++;
 			if (x == 0)
 				temp = y;
 			y++;
@@ -92,7 +92,7 @@ int	map_validation(char **map)
 	if (!maps)
 		return (0);
 	if (maps->exit.count != 1 || maps->player.count != 1
-		|| maps->collectable.count < 1)
+		|| maps->collectables < 1)
 		return (0);
 	if (!wall_check(map))
 		return (0);
