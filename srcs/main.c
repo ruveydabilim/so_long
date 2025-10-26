@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 22:23:10 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/23 18:53:41 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/26 15:02:37 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,6 @@ int	main(int argc, char **argv)
 		return (ft_printf("oh! nooo"),1);
 	if (!map_validation(mapcpy))
 		return (ft_printf("oh! nooo, errorrrr"), 1);
+	else
+		return (ft_printf("congrats! perfect map."), 1);
 }

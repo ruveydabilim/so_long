@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 22:44:48 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/23 18:51:49 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/24 16:02:05 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**map_parser(char *arg)
 	lines = count_lines(arg);
 	if (lines == 0)
 		return (write(2, "error: empty or invalid file.\n", 30), NULL);
-	map = malloc(sizeof(char *) * (lines + 1));
+	map = ft_calloc(sizeof(char *), (lines + 1));
 	if (!map)
 		return (NULL);
 	fd = open(arg, O_RDONLY);
