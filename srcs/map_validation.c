@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/26 15:47:46 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/28 15:15:13 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static t_map	*map_chars(char **map, t_map *maps, int x, int y)
 	return (maps);
 }
 
-int	map_validation(char **map)
+t_map	*map_validation(char **map)
 {
 	t_map	*maps;
 	int		x;
@@ -116,14 +116,14 @@ int	map_validation(char **map)
 		return (0);
 	if (maps->exit.count != 1 || maps->player.count != 1
 		|| maps->collectables < 1)
-		return (ft_printf("error! please check character count\n"), 0);
+		return (ft_printf("error! please check character count\n"), NULL);
 	if (!wall_check(map))
 		return (ft_printf("error! check map is rectangular\
- or be enclosed by walls.\n"), 0);
+ or be enclosed by walls.\n"), NULL);
 	floodfill (map, maps->player.x, maps->player.y);
 	map_chars(map, maps, x, y);
 	if (maps->exit.count != 0 || maps->collectables != 0
 		|| maps->collectables != 0)
-		return (ft_printf("error! please check characters are reachable\n"), 0);
-	return (1);
+		return (ft_printf("error! please check characters are reachable\n"), NULL);
+	return (maps);
 }

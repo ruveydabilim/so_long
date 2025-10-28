@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 22:23:10 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/26 15:47:33 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/28 15:13:17 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char **argv)
 {
 	char	**map;
 	char	**mapcpy;
+	t_map	*map_values;
 
 	if (argc != 2)
 		return (ft_printf("error! invalid arguman count."), 1);
@@ -27,8 +28,10 @@ int	main(int argc, char **argv)
 	mapcpy = map_parser(argv[1]);
 	if (!mapcpy)
 		return (ft_printf("error!"), 1);
-	if (!map_validation(mapcpy))
+	map_values = map_validation(mapcpy);
+	if (!map_values)
 		return (1);
-	else
-		return (ft_printf("congrats! perfect map."), 1);
+	so_long(map);
+	//mapcpy i yok edecek fonksiyon buraya.
+	
 }

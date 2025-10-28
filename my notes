@@ -7,6 +7,17 @@ map parsing ile başlarız bitince MiniLibX öğrenmeye başlarız.
 
 map parsing bitti (kutlama emojisi)!!!
 
+kullanmam gereken fonksiyonlar 
+hook fonksiyonları ile tuşları işlemelisin.
+ve her tuşta map render edilmeli (loop ile) //bonus kısımda farklı
+görsellerin xpm formatında olmalı.
+
+kullanacağın mlx fonksiyonları:
+mlx_hook
+mlx_init
+mlx_key_hook (or just hook idk)
+mlx_loop
+önce pencereyı ve içine bir şeyler basmayı öğrenebiliriz.
 
 
 
