@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/28 16:11:53 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/28 17:46:52 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ static int	close_window(void)
 	return (exit(0), 0);
 }
 
-static void	control_map(void *ptr, void *ptr2, char map, t_map *mapchars)
+static void	control_map(void *ptr, void *ptr2, char map, int x, int y)
 {
-	int		width;
-	int		height;
-	void	*imgptr = NULL;
+	int			width;
+	int			height;
+	void		*imgptr;
+	static int	i = 0;
 
+	imgptr = NULL;
 	width = 16;
 	height = 16;
 	if (map == 'P')
@@ -55,26 +57,25 @@ static void	control_map(void *ptr, void *ptr2, char map, t_map *mapchars)
 	else if (map == '1')
 		imgptr = mlx_xpm_file_to_image(ptr, "./textures/wall.xpm", \
 			&width, &height);
-	if (!imgptr)
-		ft_printf("Error: Could not load XPM file\n");
 	else
-		mlx_put_image_to_window(ptr, ptr2, imgptr, mapchars->player.x, mapchars->player.y);
+		return ;
+	mlx_put_image_to_window(ptr, ptr2, imgptr, x * width, y * height);
 }
 
-static void	function(void *ptr, void *ptr2, char **map, t_map *mapchars)
+static void	function(void *ptr, void *ptr2, char **map)
 {
 	int		x;
 	int		y;
 
 
 	x = 0;
-	y = 0;	
+	y = 0;
 	while (map[x])
 	{
 		y = 0;
 		while (map[x][y])
 		{
-			control_map(ptr, ptr2, map[x][y], mapchars);
+			control_map(ptr, ptr2, map[x][y], x, y);
 			y++;
 		}
 		x++;
@@ -82,7 +83,7 @@ static void	function(void *ptr, void *ptr2, char **map, t_map *mapchars)
 
 }
 
-void	*so_long(char **map, t_map *maps)
+void	*so_long(char **map)
 {
 	void	*ptr;
 	void	*ptr2;
@@ -93,7 +94,7 @@ void	*so_long(char **map, t_map *maps)
 	ptr2 = mlx_new_window(ptr, 1000, 1000, "game");
 	if (!ptr2)
 		return (NULL);
-	function(ptr, ptr2, map, maps);
+	function(ptr, ptr2, map);
 	mlx_key_hook(ptr2, ext, NULL);
 	mlx_hook(ptr2, 17, 0, close_window, NULL);
 	mlx_loop(ptr);

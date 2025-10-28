@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/28 15:54:06 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/28 17:22:07 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ typedef struct s_map
 
 char	**map_parser(char *arg);
 t_map	*map_validation(char **map);
-void	*so_long(char **map, t_map *maps);
+void	*so_long(char **map);
 
 #endif
