@@ -6,29 +6,30 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/28 17:46:52 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/31 18:18:13 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static int	ext(int keycode)
+static int	handle_key(t_map *map_value, int keycode)
 {
 	if (keycode == 65307)
-		return (exit(0), 1);
+		return (exit(1), 1); //burada da her şeyi freele
 	if (keycode == 119)
-		ft_printf("up\n");
+		return (press_key(map_value, 'W'), 0);
 	if (keycode == 115)
-		ft_printf("down\n");
+		return (press_key(map_value, 'S'), 0);
 	if (keycode == 97)
-		ft_printf("left\n");
+		return (press_key(map_value, 'A'), 0);
 	if (keycode == 100)
-		ft_printf("right\n");
+		return (press_key(map_value, 'D'), 0);
 	return (0);
 }
 
 static int	close_window(void)
 {
+	//burada her şeyi freelemelisin!!!
 	return (exit(0), 0);
 }
 
@@ -37,7 +38,6 @@ static void	control_map(void *ptr, void *ptr2, char map, int x, int y)
 	int			width;
 	int			height;
 	void		*imgptr;
-	static int	i = 0;
 
 	imgptr = NULL;
 	width = 16;
@@ -83,20 +83,21 @@ static void	function(void *ptr, void *ptr2, char **map)
 
 }
 
-void	*so_long(char **map)
+void	*so_long(char **map, t_map *map_values)
 {
-	void	*ptr;
-	void	*ptr2;
+	void	*init;
+	void	*window;
 
-	ptr = mlx_init();
-	if (!ptr)
+	init = mlx_init();
+	if (!init)
 		return (NULL);
-	ptr2 = mlx_new_window(ptr, 1000, 1000, "game");
-	if (!ptr2)
+	map_values->init = init;
+	window = mlx_new_window(init, 2000, 2000, "game");
+	if (!window)
 		return (NULL);
-	function(ptr, ptr2, map);
-	mlx_key_hook(ptr2, ext, NULL);
-	mlx_hook(ptr2, 17, 0, close_window, NULL);
-	mlx_loop(ptr);
+	w(init, window, map);
+	mlx_key_hook(window, handle_key, NULL);
+	mlx_hook(window, 17, 0, close_window, NULL);
+	mlx_loop(init);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/28 15:15:13 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/31 17:45:54 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ t_map	*map_validation(char **map)
 	map_chars(map, maps, x, y);
 	if (maps->exit.count != 0 || maps->collectables != 0
 		|| maps->collectables != 0)
-		return (ft_printf("error! please check characters are reachable\n"), NULL);
+		return (ft_printf("error! please check characters are reachable\n"), \
+		NULL);
 	return (maps);
 }

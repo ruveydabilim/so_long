@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/28 17:22:07 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/31 18:14:21 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,19 @@ typedef struct s_map
 	t_mchar	*collectable;
 	t_mchar	player;
 	t_mchar	exit;
+	char	**map;
+	int		map_height;
+	int		map_width;
 	int		collectables;
+	int		move_count;
+	void	**imgptr;
+	void	*window;
+	void	*init;
 }	t_map;
 
 char	**map_parser(char *arg);
 t_map	*map_validation(char **map);
-void	*so_long(char **map);
+void	*so_long(char **map, t_map *map_values);
+void	press_key(t_map *map_values, int key);
 
 #endif

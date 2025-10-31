@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 22:23:10 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/28 17:38:25 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/10/31 16:55:28 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int argc, char **argv)
 	map_values = map_validation(mapcpy);
 	if (!map_values)
 		return (1);
-	so_long(map);
+	so_long(map, map_values);
 	//mapcpy i yok edecek fonksiyon buraya.
-	
 }
