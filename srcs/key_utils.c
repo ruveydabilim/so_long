@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/31 18:12:08 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/01 14:58:45 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	move_up(t_map *map_values)
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
 	map_values->map = map;
-	free_all(map);
+	free_doublepoint((void **)map);
 }
 
 static void	move_down(t_map *map_values)
@@ -49,7 +49,7 @@ static void	move_down(t_map *map_values)
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
 	map_values->map = map;
-	free_all(map);
+	free_doublepoint((void **)map);
 }
 
 static void	move_left(t_map *map_values)
@@ -69,7 +69,7 @@ static void	move_left(t_map *map_values)
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
 	map_values->map = map;
-	free_all(map);
+	free_doublepoint((void **)map);
 }
 
 static void	move_right(t_map *map_values)
@@ -89,7 +89,7 @@ static void	move_right(t_map *map_values)
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
 	map_values->map = map;
-	free_all(map);
+	free_doublepoint((void **)map);
 }
 
 void	press_key(t_map *map_values, int key)

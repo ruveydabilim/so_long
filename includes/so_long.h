@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/31 18:14:21 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/01 15:10:00 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ typedef struct s_map
 }	t_map;
 
 char	**map_parser(char *arg);
-t_map	*map_validation(char **map);
+t_map	*map_validation(char **map, char **copymap);
 void	*so_long(char **map, t_map *map_values);
 void	press_key(t_map *map_values, int key);
+void	init_maps(t_map *maps);
+void	free_all(t_map *map, int flag);
+void	free_doublepoint(void **ptr);
 
 #endif

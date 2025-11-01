@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/31 17:45:54 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/01 15:10:36 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,6 @@ static void	map_check(char **map, t_map *maps, int x, int y)
 	}
 }
 
-void	init_maps(t_map *maps)
-{
-	maps->collectable = malloc(sizeof(t_mchar *));
-	maps->collectables = 0;
-	maps->exit.count = 0;
-	maps->player.count = 0;
-}
-
 static t_map	*map_chars(char **map, t_map *maps, int x, int y)
 {
 	int		temp;
@@ -99,18 +91,22 @@ static t_map	*map_chars(char **map, t_map *maps, int x, int y)
 		}
 		x++;
 	}
+	maps->map_height = x;
+	maps->map_width = y;
 	return (maps);
 }
 
-t_map	*map_validation(char **map)
+t_map	*map_validation(char **map, char **copymap)
 {
 	t_map	*maps;
+	t_map	*cpymaps;
 	int		x;
 	int		y;
 
 	x = 0;
 	y = 0;
 	maps = malloc(sizeof(t_map));
+	cpymaps = malloc(sizeof(t_map));
 	map_chars(map, maps, x, y);
 	if (!maps)
 		return (0);
@@ -120,11 +116,11 @@ t_map	*map_validation(char **map)
 	if (!wall_check(map))
 		return (ft_printf("error! check map is rectangular\
  or be enclosed by walls.\n"), NULL);
-	floodfill (map, maps->player.x, maps->player.y);
-	map_chars(map, maps, x, y);
-	if (maps->exit.count != 0 || maps->collectables != 0
-		|| maps->collectables != 0)
-		return (ft_printf("error! please check characters are reachable\n"), \
-		NULL);
-	return (maps);
+	floodfill (copymap, maps->player.x, maps->player.y);
+	map_chars(copymap, cpymaps, x, y);
+	if (cpymaps->exit.count != 0 || cpymaps->collectables != 0
+		|| cpymaps->collectables != 0)
+		return (free_all(cpymaps, 0), free_all(maps, 0), ft_printf("error! please check characters are\
+ reachable\n"), NULL);
+	return (free_all(cpymaps, 0), maps);
 }
