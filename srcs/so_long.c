@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/01 15:10:51 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/01 16:10:12 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static void	*control_map(t_map *map_values, char map, int x, int y)
 	else if (map == '1')
 		imgptr = mlx_xpm_file_to_image(map_values->init, "./textures\
 /wall.xpm", &width, &height);
+	else
+		return (NULL);
 	mlx_put_image_to_window(map_values->init, map_values->window, \
 		imgptr, x * width, y * height);
 	return (imgptr);
@@ -82,6 +84,7 @@ static void	init_window(t_map *map_values, char **map)
 		}
 		x++;
 	}
+	map_values->imgptr = imgptr;
 }
 
 void	*so_long(char **map, t_map *map_values)
