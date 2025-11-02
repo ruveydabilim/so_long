@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/01 15:10:00 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/02 21:23:10 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ t_map	*map_validation(char **map, char **copymap);
 void	*so_long(char **map, t_map *map_values);
 void	press_key(t_map *map_values, int key);
 void	init_maps(t_map *maps);
-void	free_all(t_map *map, int flag);
+void	free_all(t_map *map);
 void	free_doublepoint(void **ptr);
+void	init_window(t_map *map_values, char **map);
+void	free_images(t_map *map_values);
+void	redraw_window(t_map *map_values, char **map);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/01 14:58:45 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/02 22:53:04 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,62 +17,29 @@ static void	move_up(t_map *map_values)
 	char	**map;
 
 	map = map_values->map;
-	if (map[map_values->player.x][map_values->player.y - 1] != '1')
-	{
-		if (map[map_values->player.x][map_values->player.y - 1] == 'C')
-			map_values->collectables--;
-		if (map[map_values->player.x][map_values->player.y] != 'E')
-			map[map_values->player.x][map_values->player.y] = '0';
-		map[map_values->player.x][map_values->player.y - 1] = 'P';
-		map_values->player.y = map_values->player.y - 1;
-		map_values->move_count++;
-		ft_printf("move count: %d\n", map_values->move_count);
-	}
-	map_values->map = map;
-	free_doublepoint((void **)map);
-}
-
-static void	move_down(t_map *map_values)
-{
-	char	**map;
-
-	map = map_values->map;
-	if (map[map_values->player.x][map_values->player.y + 1] != '1')
-	{
-		if (map[map_values->player.x][map_values->player.y + 1] == 'C')
-			map_values->collectables--;
-		if (map[map_values->player.x][map_values->player.y] != 'E')
-			map[map_values->player.x][map_values->player.y] = '0';
-		map[map_values->player.x][map_values->player.y + 1] = 'P';
-		map_values->player.y = map_values->player.y + 1;
-		map_values->move_count++;
-		ft_printf("move count: %d\n", map_values->move_count);
-	}
-	map_values->map = map;
-	free_doublepoint((void **)map);
-}
-
-static void	move_left(t_map *map_values)
-{
-	char	**map;
-
-	map = map_values->map;
 	if (map[map_values->player.x - 1][map_values->player.y] != '1')
 	{
 		if (map[map_values->player.x - 1][map_values->player.y] == 'C')
 			map_values->collectables--;
-		if (map[map_values->player.x][map_values->player.y] != 'E')
+		if (map[map_values->player.x - 1][map_values->player.y] == 'E' && map_values->collectables == 0)
+		{
+			ft_printf("Congratulations! You've reached the exit and collected all items!\n");
+			free_all(map_values);
+			exit(0);
+		}
+		if (map[map_values->player.x][map_values->player.y] != map[map_values->exit.x][map_values->exit.y])
 			map[map_values->player.x][map_values->player.y] = '0';
+		else
+			map[map_values->player.x][map_values->player.y] = 'E';
+
 		map[map_values->player.x - 1][map_values->player.y] = 'P';
 		map_values->player.x = map_values->player.x - 1;
 		map_values->move_count++;
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
-	map_values->map = map;
-	free_doublepoint((void **)map);
 }
 
-static void	move_right(t_map *map_values)
+static void	move_down(t_map *map_values)
 {
 	char	**map;
 
@@ -81,15 +48,75 @@ static void	move_right(t_map *map_values)
 	{
 		if (map[map_values->player.x + 1][map_values->player.y] == 'C')
 			map_values->collectables--;
-		if (map[map_values->player.x][map_values->player.y] != 'E')
+		if (map[map_values->player.x + 1][map_values->player.y] == 'E' && map_values->collectables == 0)
+		{
+			ft_printf("Congratulations! You've reached the exit and collected all items!\n");
+			free_all(map_values);
+			exit(0);
+		}
+		if (map[map_values->player.x][map_values->player.y] != map[map_values->exit.x][map_values->exit.y])
 			map[map_values->player.x][map_values->player.y] = '0';
+		else
+			map[map_values->player.x][map_values->player.y] = 'E';
 		map[map_values->player.x + 1][map_values->player.y] = 'P';
 		map_values->player.x = map_values->player.x + 1;
 		map_values->move_count++;
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
-	map_values->map = map;
-	free_doublepoint((void **)map);
+}
+
+static void	move_left(t_map *map_values)
+{
+	char	**map;
+
+	map = map_values->map;
+	if (map[map_values->player.x][map_values->player.y - 1] != '1')
+	{
+		if (map[map_values->player.x][map_values->player.y - 1] == 'C')
+			map_values->collectables--;
+		if (map[map_values->player.x][map_values->player.y - 1] == 'E' && map_values->collectables == 0)
+		{
+			ft_printf("Congratulations! You've reached the exit and collected all items!\n");
+			free_all(map_values);
+			exit(0);
+		}
+		if (map[map_values->player.x][map_values->player.y] != map[map_values->exit.x][map_values->exit.y])
+			map[map_values->player.x][map_values->player.y] = '0';
+		else
+			map[map_values->player.x][map_values->player.y] = 'E';
+
+		map[map_values->player.x][map_values->player.y - 1] = 'P';
+		map_values->player.y = map_values->player.y - 1;
+		map_values->move_count++;
+		ft_printf("move count: %d\n", map_values->move_count);
+	}
+}
+
+static void	move_right(t_map *map_values)
+{
+	char	**map;
+
+	map = map_values->map;
+	if (map[map_values->player.x][map_values->player.y + 1] != '1')
+	{
+		if (map[map_values->player.x][map_values->player.y + 1] == 'C')
+			map_values->collectables--;
+		if (map[map_values->player.x][map_values->player.y + 1] == 'E' && map_values->collectables == 0)
+		{
+			ft_printf("Congratulations! You've reached the exit and collected all items!\n");
+			free_all(map_values);
+			exit(0);
+		}	
+		if (map[map_values->player.x][map_values->player.y] != map[map_values->exit.x][map_values->exit.y])
+			map[map_values->player.x][map_values->player.y] = '0';
+		else
+			map[map_values->player.x][map_values->player.y] = 'E';
+
+		map[map_values->player.x][map_values->player.y + 1] = 'P';
+		map_values->player.y = map_values->player.y + 1;
+		map_values->move_count++;
+		ft_printf("move count: %d\n", map_values->move_count);
+	}
 }
 
 void	press_key(t_map *map_values, int key)
@@ -104,4 +131,5 @@ void	press_key(t_map *map_values, int key)
 		move_down(map_values);
 	else
 		return ;
+	redraw_window(map_values, map_values->map);
 }

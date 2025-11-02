@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/01 22:30:39 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/02 20:16:51 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ t_map	*map_validation(char **map, char **copymap)
 	floodfill(copymap, maps->player.x, maps->player.y);
 	map_chars(copymap, cpymaps, x, y);
 	if (cpymaps->exit.count != 0 || cpymaps->collectables != 0)
-		return (free_all(maps), free_all(cpymaps), ft_printf("error! please check\
- characters are reachable\n") NULL);
+		return (free_all(cpymaps), free_all(maps), ft_printf("error! please check\
+ characters are reachable\n"), NULL);
 	free_all(cpymaps);
 	maps->map = map;
 	return (maps);

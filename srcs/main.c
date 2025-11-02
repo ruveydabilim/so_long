@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 22:23:10 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/01 20:52:07 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/02 16:39:37 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	main(int argc, char **argv)
 	if (!map_values)
 		return (free_doublepoint((void **)map), 1);
 	so_long(map, map_values);
-	free_all(map_values, 1);
+	free_all(map_values);
 	return (0);
 }

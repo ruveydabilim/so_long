@@ -6,16 +6,16 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/01 20:38:43 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/02 22:38:13 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static int	handle_key(t_map *map_value, int keycode)
+static int	handle_key( int keycode, t_map *map_value)
 {
 	if (keycode == 65307)
-		return (free_all(map_value, 1), exit(1), 1);
+		return (free_all(map_value), exit(1), 1);
 	if (keycode == 119)
 		return (press_key(map_value, 'W'), 0);
 	if (keycode == 115)
@@ -29,7 +29,7 @@ static int	handle_key(t_map *map_value, int keycode)
 
 static int	close_window(t_map *map_value)
 {
-	return (free_all(map_value, 1), exit(0), 0);
+	return (free_all(map_value), exit(0), 0);
 }
 
 static void	*control_map(t_map *map_values, char map, int x, int y)
@@ -41,15 +41,19 @@ static void	*control_map(t_map *map_values, char map, int x, int y)
 	imgptr = NULL;
 	width = 64;
 	height = 64;
+		
 	if (map == 'P')
 		imgptr = mlx_xpm_file_to_image(map_values->init, "./textures\
-/player.xpm", &width, &height);
+/players.xpm", &width, &height);
 	else if (map == 'C')
 		imgptr = mlx_xpm_file_to_image(map_values->init, "./textures\
-/collectable.xpm", &width, &height);
-	else if (map == 'E')
+/collectible.xpm", &width, &height);
+	else if (map == 'E' && map_values->collectables != 0)
 		imgptr = mlx_xpm_file_to_image(map_values->init, "./textures\
-/collectable.xpm", &width, &height);
+/exit.xpm", &width, &height);
+	else if (map == 'E' && map_values->collectables == 0)
+		imgptr = mlx_xpm_file_to_image(map_values->init, "./textures\
+/exit_open.xpm", &width, &height);
 	else if (map == '0')
 		imgptr = mlx_xpm_file_to_image(map_values->init, "./textures\
 /floor.xpm", &width, &height);
@@ -59,11 +63,11 @@ static void	*control_map(t_map *map_values, char map, int x, int y)
 	else
 		return (NULL);
 	mlx_put_image_to_window(map_values->init, map_values->window, \
-		imgptr, x * width, y * height);
+		imgptr, y * width, x * height);
 	return (imgptr);
 }
 
-static void	init_window(t_map *map_values, char **map)
+void	init_window(t_map *map_values, char **map)
 {
 	int		i;
 	int		x;
@@ -88,6 +92,30 @@ static void	init_window(t_map *map_values, char **map)
 	map_values->imgptr = imgptr;
 }
 
+void	redraw_window(t_map *map_values, char **map)
+{
+	int		x;
+	int		y;
+	int		i;
+
+	free_images(map_values);
+	i = 0;
+	x = 0;
+	y = 0;
+	mlx_clear_window(map_values->init, map_values->window);
+	while (map[x])
+	{
+		y = 0;
+		while (map[x][y] && map[x][y] != '\n')
+		{
+			map_values->imgptr[i++] = control_map(map_values, map[x][y], x, y);
+			y++;
+		}
+		x++;
+	}
+	map_values->imgptr[i] = NULL;
+}
+
 void	*so_long(char **map, t_map *map_values)
 {
 	void	*init;
@@ -101,8 +129,8 @@ void	*so_long(char **map, t_map *map_values)
 		* map_values->map_width + 1));
 	if (!map_values->imgptr)
 		return (NULL);
-	window = mlx_new_window(init, map_values->map_height * 64, \
-		map_values->map_width * 64, "SO LONG");
+	window = mlx_new_window(init, map_values->map_width * 64, \
+		map_values->map_height * 64, "SO LONG");
 	if (!window)
 		return (NULL);
 	map_values->window = window;
