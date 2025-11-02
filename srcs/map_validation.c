@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/01 15:10:36 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/01 22:30:39 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static	void	floodfill(char **map, int x, int y)
 {
-	if (map[x][y] != '1')
-		map[x][y] = '1';
-	else
+	if (!map || !map[x] || !map[x][y])
 		return ;
+	if (map[x][y] == '1')
+		return ;
+	map[x][y] = '1';
 	floodfill(map, x + 1, y);
 	floodfill(map, x - 1, y);
 	floodfill(map, x, y + 1);
@@ -63,8 +64,11 @@ static void	map_check(char **map, t_map *maps, int x, int y)
 	}
 	if (map[x][y] == 'C')
 	{
-		maps->collectable[maps->collectables].x = x;
-		maps->collectable[maps->collectables].y = y;
+		if (maps->collectable)
+		{
+			maps->collectable[maps->collectables].x = x;
+			maps->collectable[maps->collectables].y = y;
+		}
 		maps->collectables++;
 	}
 }
@@ -72,9 +76,7 @@ static void	map_check(char **map, t_map *maps, int x, int y)
 static t_map	*map_chars(char **map, t_map *maps, int x, int y)
 {
 	int		temp;
-	int		i;
 
-	i = 0;
 	temp = 0;
 	init_maps(maps);
 	while (map[x])
@@ -107,20 +109,24 @@ t_map	*map_validation(char **map, char **copymap)
 	y = 0;
 	maps = malloc(sizeof(t_map));
 	cpymaps = malloc(sizeof(t_map));
+	if (!maps || !cpymaps)
+		return (NULL);
 	map_chars(map, maps, x, y);
-	if (!maps)
-		return (0);
-	if (maps->exit.count != 1 || maps->player.count != 1
+	if (!maps || maps->exit.count != 1 || maps->player.count != 1
 		|| maps->collectables < 1)
-		return (ft_printf("error! please check character count\n"), NULL);
+		return (free(cpymaps), free(maps), ft_printf("error! please check character count\n"), NULL);
 	if (!wall_check(map))
-		return (ft_printf("error! check map is rectangular\
+		return (free(cpymaps), free(maps), ft_printf("error! check map is rectangular\
  or be enclosed by walls.\n"), NULL);
-	floodfill (copymap, maps->player.x, maps->player.y);
+	maps->collectable = malloc(sizeof(t_mchar) * (maps->collectables + 1));
+	if (!maps->collectable)
+		return (free(cpymaps), free(maps), NULL);
+	floodfill(copymap, maps->player.x, maps->player.y);
 	map_chars(copymap, cpymaps, x, y);
-	if (cpymaps->exit.count != 0 || cpymaps->collectables != 0
-		|| cpymaps->collectables != 0)
-		return (free_all(cpymaps, 0), free_all(maps, 0), ft_printf("error! please check characters are\
- reachable\n"), NULL);
-	return (free_all(cpymaps, 0), maps);
+	if (cpymaps->exit.count != 0 || cpymaps->collectables != 0)
+		return (free_all(maps), free_all(cpymaps), ft_printf("error! please check\
+ characters are reachable\n") NULL);
+	free_all(cpymaps);
+	maps->map = map;
+	return (maps);
 }

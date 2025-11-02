@@ -17,10 +17,8 @@ INCLUDES = $(LIBFT) $(PRINTF) $(MLX)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(MLX)
-	$(CC) $(CFLAGS) $(MLX_FLAG) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES) 
+	$(CC) $(CFLAGS) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES) $(MLX_FLAG) 
 
-learn: $(LIBFT) $(PRINTF) $(MLX)
-	cc $(MLX_FLAG) ./srcs/learn_mlx.c  $(INCLUDES) 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 $(PRINTF):
@@ -37,7 +35,6 @@ fclean: clean
 	rm -f $(NAME)
 	make fclean -C $(LIBFT_DIR)
 	make fclean -C $(PRINTF_DIR)
-	make fclean -C $(MLX_DIR)
 
 re: fclean all
 

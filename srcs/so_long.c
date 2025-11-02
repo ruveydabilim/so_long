@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/01 16:10:12 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/01 20:38:43 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,14 @@ static void	init_window(t_map *map_values, char **map)
 	while (map[x])
 	{
 		y = 0;
-		while (map[x][y])
+		while (map[x][y] && map[x][y] != '\n')
 		{
 			imgptr[i++] = control_map(map_values, map[x][y], x, y);
 			y++;
 		}
 		x++;
 	}
+	imgptr[i] = NULL;
 	map_values->imgptr = imgptr;
 }
 
@@ -96,14 +97,18 @@ void	*so_long(char **map, t_map *map_values)
 	if (!init)
 		return (NULL);
 	map_values->init = init;
+	map_values->imgptr = malloc(sizeof(void *) * (map_values->map_height \
+		* map_values->map_width + 1));
+	if (!map_values->imgptr)
+		return (NULL);
 	window = mlx_new_window(init, map_values->map_height * 64, \
 		map_values->map_width * 64, "SO LONG");
 	if (!window)
 		return (NULL);
 	map_values->window = window;
 	init_window(map_values, map);
-	mlx_key_hook(window, handle_key, NULL);
-	mlx_hook(window, 17, 0, close_window, NULL);
+	mlx_key_hook(window, handle_key, map_values);
+	mlx_hook(window, 17, 0, close_window, map_values);
 	mlx_loop(init);
 	return (NULL);
 }
