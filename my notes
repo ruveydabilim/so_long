@@ -22,12 +22,29 @@ mlx_loop
 pencereye bir şeyler basmayı öğrendik şimdi basacağımız şeyleri bulmalı ve ayarlamalıyız.
 
 
+yapmam gerekenler:
 
+* en kısa yolu bulan algoritmayı yaz. (Traveling Salesman Problem (TSP) araştır). kapı açıldıktan sonra en kısa yoldan çıkış sağla.
+* en kısa yoldan giderse yıldız sistemiyle destekleyebilirsin. (örneğin 3 yıldız en kısa yol, 2 yıldız biraz daha uzun yol, 1 yıldız en uzun yol gibi)
+* bonus için düşman bomba sprite ekle ve render ı güncel zamanlı yap. 
+* bonusta düşmanlar rastgele hareket etsin.
+* düşmanlar oyuncuya çarparsa oyun biter.
+* düşmanlar için bir AI olabilir.
+* bomba düşmanlardan düşebilir.
+* bomba düşmanları yok edebilir.
+* tüm düşmanlar ölünce kapı açılır.
+* tip1 düşmandan collectable düşer.
+* tip2 düşmandan bomba düşer.
+* düşmanlar animasyonlu olabilir.
+* level sistemi ekle.
+* her levelde farklı haritalar olabilir.
+* level atlayınca yeni harita yüklensin.
+* level atlayınca düşman sayısı artsın.
+* skor ekrana yazdırılacak. (adım sayısı).
 
-
-
-
-
+düşmanlar animasyonlar ve bombaaa eklenecek.
+bazı düşmanlardan collectable düşecek o yüzden düşmanlar ölmeden kapı açılmayacak.
+bazı düşmanlardan da bomba düşecek. (önce onları öldür).
 
 
 
