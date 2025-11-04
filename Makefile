@@ -17,15 +17,22 @@ INCLUDES = $(LIBFT) $(PRINTF) $(MLX)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(MLX)
+$(NAME): $(MLX) $(OBJS) $(LIBFT) $(PRINTF)
 	$(CC) $(CFLAGS) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES) $(MLX_FLAG) 
-
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 $(PRINTF):
 	make -C $(PRINTF_DIR)
-$(MLX):
+
+$(MLX): mlx_install
 	make -C $(MLX_DIR)
+
+mlx_install:
+	if [ ! -d "$(MLX_DIR)" ]; then \
+		wget https://cdn.intra.42.fr/document/document/40310/minilibx-linux.tgz; \
+		tar -xzvf minilibx-linux.tgz; \
+		mv minilibx-linux $(MLX_DIR); \
+		rm -rf minilibx-linux.tgz; fi
 clean:
 	rm -f $(OBJS)
 	make clean -C $(LIBFT_DIR)
@@ -39,4 +46,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re mlx_install

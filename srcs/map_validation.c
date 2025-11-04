@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/02 20:16:51 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/04 17:05:26 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ static void	map_check(char **map, t_map *maps, int x, int y)
 	}
 	if (map[x][y] == 'C')
 	{
-		if (maps->collectable)
+		if (maps->collectible)
 		{
-			maps->collectable[maps->collectables].x = x;
-			maps->collectable[maps->collectables].y = y;
+			maps->collectible[maps->collectibles].x = x;
+			maps->collectible[maps->collectibles].y = y;
 		}
-		maps->collectables++;
+		maps->collectibles++;
 	}
 }
 
@@ -98,35 +98,31 @@ static t_map	*map_chars(char **map, t_map *maps, int x, int y)
 	return (maps);
 }
 
-t_map	*map_validation(char **map, char **copymap)
+t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 {
 	t_map	*maps;
-	t_map	*cpymaps;
 	int		x;
 	int		y;
 
 	x = 0;
 	y = 0;
-	maps = malloc(sizeof(t_map));
-	cpymaps = malloc(sizeof(t_map));
+	maps = ft_calloc(sizeof(t_map), 1);
 	if (!maps || !cpymaps)
 		return (NULL);
 	map_chars(map, maps, x, y);
-	if (!maps || maps->exit.count != 1 || maps->player.count != 1
-		|| maps->collectables < 1)
-		return (free(cpymaps), free(maps), ft_printf("error! please check character count\n"), NULL);
+	if (maps->exit.count != 1 || maps->player.count != 1
+		|| maps->collectibles < 1)
+		return (freemsg(maps, cpymaps, "error! check character count"), NULL);
 	if (!wall_check(map))
 		return (free(cpymaps), free(maps), ft_printf("error! check map is rectangular\
  or be enclosed by walls.\n"), NULL);
-	maps->collectable = malloc(sizeof(t_mchar) * (maps->collectables + 1));
-	if (!maps->collectable)
+	maps->collectible = ft_calloc(sizeof(t_mchar), (maps->collectibles + 1));
+	if (!maps->collectible)
 		return (free(cpymaps), free(maps), NULL);
 	floodfill(copymap, maps->player.x, maps->player.y);
 	map_chars(copymap, cpymaps, x, y);
-	if (cpymaps->exit.count != 0 || cpymaps->collectables != 0)
-		return (free_all(cpymaps), free_all(maps), ft_printf("error! please check\
- characters are reachable\n"), NULL);
-	free_all(cpymaps);
+	if (cpymaps->exit.count != 0 || cpymaps->collectibles != 0)
+		return (freemsg(maps, cpymaps, "error! mapchars not reachable"), NULL);
 	maps->map = map;
-	return (maps);
+	return (free_all(cpymaps), maps);
 }

@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/03 22:18:48 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/04 17:17:22 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_mchar
 typedef struct s_img
 {
 	void	*player;
-	void	*collectable;
+	void	*collectible;
 	void	*exit;
 	void	*floor;
 	void	*wall;
@@ -37,15 +37,15 @@ typedef struct s_img
 
 typedef struct s_map
 {
-	t_mchar	*collectable;
+	t_mchar	*collectible;
 	t_mchar	player;
 	t_mchar	exit;
+	t_img	imgptr;
 	char	**map;
 	int		map_height;
 	int		map_width;
-	int		collectables;
+	int		collectibles;
 	int		move_count;
-	t_img	*imgptr;
 	void	*init;
 	void	*window;
 }	t_map;
@@ -56,8 +56,10 @@ typedef struct s_node
 	int				steps;
 	struct s_node	*next;
 }	t_node;
+
 char	**map_parser(char *arg);
-t_map	*map_validation(char **map, char **copymap);
+t_map	*map_validation(char **map, char **copymap, t_map *cpymaps);
+void	freemsg(void *free1, void *free2, char *message);
 void	*so_long(char **map, t_map *map_values);
 void	press_key(t_map *map_values, int key);
 void	init_maps(t_map *maps);
@@ -65,6 +67,8 @@ void	free_all(t_map *map);
 void	free_doublepoint(void **ptr);
 void	init_window(t_map *map_values, char **map);
 void	free_images(t_map *map_values);
+void	init_images(t_map *map_values);
 void	redraw_window(t_map *map_values, char **map);
 int		find_shortest_path(t_map *game);
+void	*control_map(t_map *map_values, char map, int x, int y);
 #endif

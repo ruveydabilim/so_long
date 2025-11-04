@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:39:05 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/03 22:17:49 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/04 17:26:14 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	free_visited(int **v, int h)
 	int	i;
 
 	if (!v)
-		return;
+		return ;
 	i = 0;
 	while (i < h)
 		free(v[i++]);
@@ -31,14 +31,14 @@ static void	enqueue(t_node **head, t_mchar p, int steps)
 
 	new = malloc(sizeof(t_node));
 	if (!new)
-		return;
+		return ;
 	new->pos = p;
 	new->steps = steps;
 	new->next = NULL;
 	if (!*head)
 	{
 		*head = new;
-		return;
+		return ;
 	}
 	tmp = *head;
 	while (tmp->next)
@@ -81,12 +81,10 @@ static int	**alloc_visited(int h, int w)
 
 static void	process_neighbors(t_map *g, t_node node, int **v, t_node **q)
 {
-	static const int dirs[4][2] = {
-		{0, -1}, {0, 1}, {-1, 0}, {1, 0}
-	};
-	int	i;
-	int	nx;
-	int	ny;
+	static int	dirs[4][2] = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+	int			i;
+	int			nx;
+	int			ny;
 
 	i = -1;
 	while (++i < 4)
@@ -101,7 +99,7 @@ static void	process_neighbors(t_map *g, t_node node, int **v, t_node **q)
 		}
 	}
 }
-
+/* 
 static int	bfs_map(t_map *g)
 {
 	t_node	*q;
@@ -139,4 +137,5 @@ int	find_shortest_path(t_map *game)
 		return (-1);
 	}
 	return (steps);
-}
+} */
+// traveling salesman problem yaz.
