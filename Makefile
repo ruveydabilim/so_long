@@ -18,31 +18,29 @@ INCLUDES = $(LIBFT) $(PRINTF) $(MLX)
 all: $(NAME)
 
 $(NAME): $(MLX) $(OBJS) $(LIBFT) $(PRINTF)
-	$(CC) $(CFLAGS) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES) $(MLX_FLAG) 
+	@$(CC) $(CFLAGS) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES) $(MLX_FLAG)
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	make -s -C $(LIBFT_DIR)
 $(PRINTF):
-	make -C $(PRINTF_DIR)
+	make -s -C $(PRINTF_DIR)
 
 $(MLX): mlx_install
-	make -C $(MLX_DIR)
+	make -s -C $(MLX_DIR)
 
 mlx_install:
-	if [ ! -d "$(MLX_DIR)" ]; then \
-		wget https://cdn.intra.42.fr/document/document/40310/minilibx-linux.tgz; \
-		tar -xzvf minilibx-linux.tgz; \
-		mv minilibx-linux $(MLX_DIR); \
-		rm -rf minilibx-linux.tgz; fi
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		git clone https://github.com/42paris/minilibx-linux.git mlx \
+		mv mlx ./external/; fi
 clean:
-	rm -f $(OBJS)
-	make clean -C $(LIBFT_DIR)
-	make clean -C $(PRINTF_DIR)
-	make clean -C $(MLX_DIR)
+	@rm -f $(OBJS)
+	make -s clean -C $(LIBFT_DIR)
+	make -s clean -C $(PRINTF_DIR)
+	make -s clean -C $(MLX_DIR)
 
 fclean: clean
-	rm -f $(NAME)
-	make fclean -C $(LIBFT_DIR)
-	make fclean -C $(PRINTF_DIR)
+	@rm -rf $(NAME)
+	make -s fclean -C $(LIBFT_DIR)
+	make -s fclean -C $(PRINTF_DIR)
 
 re: fclean all
 
