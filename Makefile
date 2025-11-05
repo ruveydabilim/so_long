@@ -29,7 +29,7 @@ $(MLX): mlx_install
 
 mlx_install:
 	@if [ ! -d "$(MLX_DIR)" ]; then \
-		git clone https://github.com/42paris/minilibx-linux.git mlx \
+		git clone https://github.com/42paris/minilibx-linux.git mlx;\
 		mv mlx ./external/; fi
 clean:
 	@rm -f $(OBJS)
