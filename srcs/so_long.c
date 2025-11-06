@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/04 17:06:29 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/06 13:05:05 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,19 @@ void	*so_long(char **map, t_map *map_values)
 	init = mlx_init();
 	if (!init)
 		return (NULL);
-	map_values->init = init;
-	window = mlx_new_window(init, map_values->map_width * 64, \
+	if (map_values->map_height * 64 > MAX_HEIGHT
+		&& map_values->map_width * 64 > MAX_WIDTH)
+		window = mlx_new_window(init, MAX_WIDTH, MAX_HEIGHT, "SO LONG");
+	else if (map_values->map_height * 64 > MAX_HEIGHT)
+		window = mlx_new_window(init, map_values->map_width * 64, \
+		MAX_HEIGHT, "SO LONG");
+	else if (map_values->map_width * 64 > MAX_WIDTH)
+		window = mlx_new_window(init, MAX_WIDTH, \
 		map_values->map_height * 64, "SO LONG");
+	else
+		window = mlx_new_window(init, map_values->map_width * 64, \
+		map_values->map_height * 64, "SO LONG");
+	map_values->init = init;
 	if (!window)
 		return (NULL);
 	map_values->window = window;

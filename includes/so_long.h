@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/04 17:17:22 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/06 13:07:37 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # include "../external/libft/libft.h"
 # include "../external/get_next_line/get_next_line.h"
 # include <fcntl.h>
+
+# ifndef MAX_WIDTH
+#  define MAX_WIDTH 2560
+# endif
+
+# ifndef MAX_HEIGHT
+#  define MAX_HEIGHT 1440
+# endif
 
 typedef struct s_mchar
 {
@@ -50,13 +58,6 @@ typedef struct s_map
 	void	*window;
 }	t_map;
 
-typedef struct s_node
-{
-	t_mchar			pos;
-	int				steps;
-	struct s_node	*next;
-}	t_node;
-
 char	**map_parser(char *arg);
 t_map	*map_validation(char **map, char **copymap, t_map *cpymaps);
 void	freemsg(void *free1, void *free2, char *message);
@@ -71,4 +72,6 @@ void	init_images(t_map *map_values);
 void	redraw_window(t_map *map_values, char **map);
 int		find_shortest_path(t_map *game);
 void	*control_map(t_map *map_values, char map, int x, int y);
+void	update_img(t_map *map_values, int key);
+
 #endif

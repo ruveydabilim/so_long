@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/04 17:10:15 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/06 12:25:48 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	move_up(t_map *map_values)
 		map[map_values->player.x - 1][map_values->player.y] = 'P';
 		map_values->player.x = map_values->player.x - 1;
 		map_values->move_count++;
+		update_img(map_values, 'W');
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
 }
@@ -64,6 +65,7 @@ static void	move_down(t_map *map_values)
 		map[map_values->player.x + 1][map_values->player.y] = 'P';
 		map_values->player.x = map_values->player.x + 1;
 		map_values->move_count++;
+		update_img(map_values, 'S');
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
 }
@@ -92,6 +94,7 @@ static void	move_left(t_map *map_values)
 		map[map_values->player.x][map_values->player.y - 1] = 'P';
 		map_values->player.y = map_values->player.y - 1;
 		map_values->move_count++;
+		update_img(map_values, 'A');
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
 }
@@ -120,6 +123,7 @@ static void	move_right(t_map *map_values)
 		map[map_values->player.x][map_values->player.y + 1] = 'P';
 		map_values->player.y = map_values->player.y + 1;
 		map_values->move_count++;
+		update_img(map_values, 'D');
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
 }
