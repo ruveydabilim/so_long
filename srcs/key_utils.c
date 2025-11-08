@@ -6,13 +6,13 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/06 12:25:48 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/08 18:08:51 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static void	move_up(t_map *map_values)
+static void	move_up(t_map *map_values, int temp, int counter)
 {
 	char	**map;
 
@@ -24,7 +24,7 @@ static void	move_up(t_map *map_values)
 		if (map[map_values->player.x - 1][map_values->player.y] == 'E'
 				&& map_values->collectibles == 0)
 		{
-			ft_printf("Congratulations! You've reached the exit\n");
+			exit_message(map_values, temp, counter);
 			free_all(map_values);
 			exit(0);
 		}
@@ -41,7 +41,7 @@ static void	move_up(t_map *map_values)
 	}
 }
 
-static void	move_down(t_map *map_values)
+static void	move_down(t_map *map_values, int temp, int counter)
 {
 	char	**map;
 
@@ -53,8 +53,8 @@ static void	move_down(t_map *map_values)
 		if (map[map_values->player.x + 1][map_values->player.y] == 'E'
 			&& map_values->collectibles == 0)
 		{
-			ft_printf("Congratulations! You've reached the exit\n");
 			free_all(map_values);
+			exit_message(map_values, temp, counter);
 			exit(0);
 		}
 		if (map[map_values->player.x][map_values->player.y]
@@ -70,7 +70,7 @@ static void	move_down(t_map *map_values)
 	}
 }
 
-static void	move_left(t_map *map_values)
+static void	move_left(t_map *map_values, int temp, int counter)
 {
 	char	**map;
 
@@ -82,7 +82,7 @@ static void	move_left(t_map *map_values)
 		if (map[map_values->player.x][map_values->player.y - 1] == 'E'
 			&& map_values->collectibles == 0)
 		{
-			ft_printf("Congratulations! You've reached the exit\n");
+			exit_message(map_values, temp, counter);
 			free_all(map_values);
 			exit(0);
 		}
@@ -99,7 +99,7 @@ static void	move_left(t_map *map_values)
 	}
 }
 
-static void	move_right(t_map *map_values)
+static void	move_right(t_map *map_values, int temp, int counter)
 {
 	char	**map;
 
@@ -111,7 +111,7 @@ static void	move_right(t_map *map_values)
 		if (map[map_values->player.x][map_values->player.y + 1] == 'E'
 			&& map_values->collectibles == 0)
 		{
-			ft_printf("Congratulations! You've reached the exit\n");
+			exit_message(map_values, temp, counter);
 			free_all(map_values);
 			exit(0);
 		}	
@@ -130,14 +130,27 @@ static void	move_right(t_map *map_values)
 
 void	press_key(t_map *map_values, int key)
 {
+	int	counter;
+	int	temp;
+	int	flag;
+
+	temp = 0;
+	flag = 0;
+	counter = 0;
+	if (map_values->collectibles == 0 && !flag)
+	{
+		counter = find_shortest_path(*map_values);
+		flag = 1;
+		temp = map_values->move_count;
+	}
 	if (key == 'A')
-		move_left(map_values);
+		move_left(map_values, temp, counter);
 	else if (key == 'D')
-		move_right(map_values);
+		move_right(map_values, temp, counter);
 	else if (key == 'W')
-		move_up(map_values);
+		move_up(map_values, temp, counter);
 	else if (key == 'S')
-		move_down(map_values);
+		move_down(map_values, temp, counter);
 	else
 		return ;
 	redraw_window(map_values, map_values->map);

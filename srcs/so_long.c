@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/06 13:05:05 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/08 14:56:33 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	handle_key( int keycode, t_map *map_value)
 {
 	if (keycode == 65307)
-		return (free_all(map_value), exit(1), 1);
+		return (free_all(map_value), exit(0), 1);
 	if (keycode == 119)
 		return (press_key(map_value, 'W'), 0);
 	if (keycode == 115)
@@ -85,7 +85,7 @@ void	*so_long(char **map, t_map *map_values)
 		return (NULL);
 	map_values->window = window;
 	init_window(map_values, map);
-	mlx_key_hook(window, handle_key, map_values);
+	mlx_hook(window, 2, (1L << 0), handle_key, map_values);
 	mlx_hook(window, 17, 0, close_window, map_values);
 	mlx_loop(init);
 	return (NULL);

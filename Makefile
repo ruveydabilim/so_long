@@ -2,7 +2,7 @@ NAME = so_long
 CC = cc
 CFLAGS = -g3 -Wall -Wextra -Werror
 SRC = main.c map_parser.c map_validation.c so_long.c map_utils.c free_all.c \
-	key_utils.c
+	key_utils.c find_shortest_path.c
 GNL = ./external/get_next_line/get_next_line.c ./external/get_next_line/get_next_line_utils.c
 SRCS = $(addprefix srcs/, $(SRC))
 OBJS = $(SRCS:.c=.o)
@@ -41,6 +41,7 @@ fclean: clean
 	@rm -rf $(NAME)
 	make -s fclean -C $(LIBFT_DIR)
 	make -s fclean -C $(PRINTF_DIR)
+	rm -rf $(MLX_DIR)
 
 re: fclean all
 
