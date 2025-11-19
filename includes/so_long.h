@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/19 16:50:19 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/19 17:05:13 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_path_data
 {
 	char	**map;
 	t_mchar	curr;
+	t_mchar	exit;
 	int		steps;
 }	t_path_data;
 
