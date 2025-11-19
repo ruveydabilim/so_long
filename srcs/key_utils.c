@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/08 18:08:51 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/19 15:10:39 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	move_up(t_map *map_values, int temp, int counter)
 	{
 		if (map[map_values->player.x - 1][map_values->player.y] == 'C')
 			map_values->collectibles--;
+		map_values->move_count++;
 		if (map[map_values->player.x - 1][map_values->player.y] == 'E'
 				&& map_values->collectibles == 0)
 		{
@@ -35,7 +36,6 @@ static void	move_up(t_map *map_values, int temp, int counter)
 			map[map_values->player.x][map_values->player.y] = 'E';
 		map[map_values->player.x - 1][map_values->player.y] = 'P';
 		map_values->player.x = map_values->player.x - 1;
-		map_values->move_count++;
 		update_img(map_values, 'W');
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
@@ -50,11 +50,12 @@ static void	move_down(t_map *map_values, int temp, int counter)
 	{
 		if (map[map_values->player.x + 1][map_values->player.y] == 'C')
 			map_values->collectibles--;
+		map_values->move_count++;
 		if (map[map_values->player.x + 1][map_values->player.y] == 'E'
 			&& map_values->collectibles == 0)
 		{
-			free_all(map_values);
 			exit_message(map_values, temp, counter);
+			free_all(map_values);
 			exit(0);
 		}
 		if (map[map_values->player.x][map_values->player.y]
@@ -64,7 +65,6 @@ static void	move_down(t_map *map_values, int temp, int counter)
 			map[map_values->player.x][map_values->player.y] = 'E';
 		map[map_values->player.x + 1][map_values->player.y] = 'P';
 		map_values->player.x = map_values->player.x + 1;
-		map_values->move_count++;
 		update_img(map_values, 'S');
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
@@ -79,6 +79,7 @@ static void	move_left(t_map *map_values, int temp, int counter)
 	{
 		if (map[map_values->player.x][map_values->player.y - 1] == 'C')
 			map_values->collectibles--;
+		map_values->move_count++;
 		if (map[map_values->player.x][map_values->player.y - 1] == 'E'
 			&& map_values->collectibles == 0)
 		{
@@ -93,7 +94,6 @@ static void	move_left(t_map *map_values, int temp, int counter)
 			map[map_values->player.x][map_values->player.y] = 'E';
 		map[map_values->player.x][map_values->player.y - 1] = 'P';
 		map_values->player.y = map_values->player.y - 1;
-		map_values->move_count++;
 		update_img(map_values, 'A');
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
@@ -108,13 +108,14 @@ static void	move_right(t_map *map_values, int temp, int counter)
 	{
 		if (map[map_values->player.x][map_values->player.y + 1] == 'C')
 			map_values->collectibles--;
+		map_values->move_count++;
 		if (map[map_values->player.x][map_values->player.y + 1] == 'E'
 			&& map_values->collectibles == 0)
 		{
 			exit_message(map_values, temp, counter);
 			free_all(map_values);
 			exit(0);
-		}	
+		}
 		if (map[map_values->player.x][map_values->player.y]
 			!= map[map_values->exit.x][map_values->exit.y])
 			map[map_values->player.x][map_values->player.y] = '0';
@@ -122,7 +123,6 @@ static void	move_right(t_map *map_values, int temp, int counter)
 			map[map_values->player.x][map_values->player.y] = 'E';
 		map[map_values->player.x][map_values->player.y + 1] = 'P';
 		map_values->player.y = map_values->player.y + 1;
-		map_values->move_count++;
 		update_img(map_values, 'D');
 		ft_printf("move count: %d\n", map_values->move_count);
 	}
@@ -130,13 +130,10 @@ static void	move_right(t_map *map_values, int temp, int counter)
 
 void	press_key(t_map *map_values, int key)
 {
-	int	counter;
-	int	temp;
-	int	flag;
+	static int	counter;
+	static int	temp;
+	static int	flag;
 
-	temp = 0;
-	flag = 0;
-	counter = 0;
 	if (map_values->collectibles == 0 && !flag)
 	{
 		counter = find_shortest_path(*map_values);

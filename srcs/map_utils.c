@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:20 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/06 12:26:29 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/19 16:33:21 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ void	update_img(t_map *map_values, int key)
 		mlx_destroy_image(map_values->init, map_values->imgptr.player);
 	if (key == 'W')
 		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/move_up.xpm", &width, &height);
+"./textures/move_up.xpm", &width, &height);
 	else if (key == 'A')
 		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/move_left.xpm", &width, &height);
+"./textures/move_left.xpm", &width, &height);
 	else if (key == 'S')
 		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/move_down.xpm", &width, &height);
+"./textures/move_down.xpm", &width, &height);
 	else if (key == 'D')
 		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/players.xpm", &width, &height);
+"./textures/players.xpm", &width, &height);
 	else
 		return ;
 }
@@ -59,17 +59,17 @@ void	init_images(t_map *map_values)
 	width = 64;
 	height = 64;
 	map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/players.xpm", &width, &height);
+"./textures/players.xpm", &width, &height);
 	map_values->imgptr.collectible = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/collectible.xpm", &width, &height);
+"./textures/collectible.xpm", &width, &height);
 	map_values->imgptr.exit = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/exit.xpm", &width, &height);
+"./textures/exit.xpm", &width, &height);
 	map_values->imgptr.floor = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/floor.xpm", &width, &height);
+"./textures/floor.xpm", &width, &height);
 	map_values->imgptr.wall = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/wall.xpm", &width, &height);
+"./textures/wall.xpm", &width, &height);
 	map_values->imgptr.exit_open = mlx_xpm_file_to_image(map_values->init, \
-		"./textures/exit_open.xpm", &width, &height);
+"./textures/exit_open.xpm", &width, &height);
 }
 
 void	init_window(t_map *map_values, char **map)

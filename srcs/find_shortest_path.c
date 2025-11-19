@@ -6,83 +6,102 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 12:22:20 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/08 18:06:26 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/19 16:45:11 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static char	**copy_map(char **original_map, int height)
+static void	check_neighbor(t_path_data *data, int *best, int next[2], int d[2])
 {
-	char	**map_copy;
-	int		i;
+	int	dist;
 
-	map_copy = (char **)malloc(sizeof(char *) * (height + 1));
-	if (!map_copy)
-		return (NULL);
-	i = 0;
-	while (i < height)
+	if (data->map[data->curr[0] + d[0]][data->curr[1] + d[1]] != '1')
 	{
-		map_copy[i] = ft_strdup(original_map[i]);
-		if (!map_copy[i])
+		dist = manhattan_distance(data->curr[0] + d[0], data->curr[1] + d[1],
+				data->exit[0], data->exit[1]);
+		if (dist < *best)
 		{
-			while (--i >= 0)
-				free(map_copy[i]);
-			free(map_copy);
-			return (NULL);
+			*best = dist;
+			next[0] = data->curr[0] + d[0];
+			next[1] = data->curr[1] + d[1];
 		}
-		i++;
 	}
-	map_copy[i] = NULL;
-	return (map_copy);
 }
 
-static void	find_path(char **map, int x, int y, double *count)
+static int	find_best_move(t_path_data *data, int next[2])
 {
-	static int	min_value;
+	int	best_dist;
+	int	dx[4];
+	int	dy[4];
+	int	i;
+	int	d[2];
 
-	if (map[x][y] == 'E')
+	init_directions(dx, dy);
+	best_dist = 2147483647;
+	next[0] = data->curr[0];
+	next[1] = data->curr[1];
+	i = -1;
+	while (++i < 4)
 	{
-		min_value = *count;
-		return ;
+		d[0] = dx[i];
+		d[1] = dy[i];
+		check_neighbor(data, &best_dist, next, d);
 	}
-	if (map[x][y] == '1')
-		return ;
-	map[x][y] = '1';
-	*count += 0.25;
-	find_path(map, x, y + 1, count);
-	find_path(map, x, y - 1, count);
-	find_path(map, x + 1, y, count);
-	find_path(map, x - 1, y, count);
-	*count = min_value;
+	return (next[0] == data->curr[0] && next[1] == data->curr[1]);
+}
+
+static int	find_greedy_path(t_path_data *data)
+{
+	int	next[2];
+
+	data->steps = 0;
+	while (data->curr[0] != data->exit[0] || data->curr[1] != data->exit[1])
+	{
+		if (find_best_move(data, next))
+			return (0);
+		if (data->map[data->curr[0]][data->curr[1]] != 'P'
+			&& data->map[data->curr[0]][data->curr[1]] != 'E')
+			data->map[data->curr[0]][data->curr[1]] = '1';
+		data->curr[0] = next[0];
+		data->curr[1] = next[1];
+		data->steps++;
+		if (data->steps > 10000)
+			return (0);
+	}
+	return (data->steps);
 }
 
 void	exit_message(t_map *map_values, int temp, int count)
 {
-	if (map_values->move_count - temp == count)
-		ft_printf ("Congratulations! You found shortest path and escape\n");
+	int	moves_made;
+
+	moves_made = map_values->move_count - temp;
+	if (moves_made == count)
+		ft_printf("Congratulations! You found shortest path and escape\n");
 	else
-		ft_printf ("You couldn't find shortest path. You made extra %d step\n",
-			count - (map_values->move_count - temp));
+		ft_printf("You couldn't find shortest path. You made extra %d step\n",
+			moves_made - count);
 }
 
 int	find_shortest_path(t_map map_values)
 {
-	char	**map;
-	double	count;
-	int		i;
+	t_path_data	data;
+	int			i;
 
-	count = 0;
-	map = copy_map(map_values.map, map_values.map_height);
-	if (!map)
+	data.map = copy_map(map_values.map, map_values.map_height);
+	if (!data.map)
 		return (0);
-	find_path(map, map_values.player.x, map_values.player.y, &count);
+	data.curr[0] = map_values.player.x;
+	data.curr[1] = map_values.player.y;
+	data.exit[0] = map_values.exit.x;
+	data.exit[1] = map_values.exit.y;
+	data.steps = find_greedy_path(&data);
 	i = 0;
-	while (map[i])
+	while (data.map[i])
 	{
-		free(map[i]);
+		free(data.map[i]);
 		i++;
 	}
-	free(map);
-	return (count);
+	return (free(data.map), data.steps);
 }
