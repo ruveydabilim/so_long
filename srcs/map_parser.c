@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 22:44:48 by rbilim            #+#    #+#             */
-/*   Updated: 2025/10/24 16:02:05 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/22 18:53:21 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ char	**map_parser(char *arg)
 	int		lines;
 
 	if (!arg || !*arg || !is_valid(arg))
-		return (write(2, "error: invalid argument type.\n", 30), NULL);
+		return (write(2, "Error\nInvalid argument type.\n", 30), NULL);
 	lines = count_lines(arg);
 	if (lines == 0)
-		return (write(2, "error: empty or invalid file.\n", 30), NULL);
+		return (write(2, "Error\nEmpty or invalid file.\n", 30), NULL);
 	map = ft_calloc(sizeof(char *), (lines + 1));
 	if (!map)
 		return (NULL);

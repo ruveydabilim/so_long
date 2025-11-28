@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/19 17:05:13 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/28 18:43:07 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <fcntl.h>
 
 # ifndef MAX_WIDTH
-#  define MAX_WIDTH 2560
+#  define MAX_WIDTH 25600
 # endif
 
 # ifndef MAX_HEIGHT
-#  define MAX_HEIGHT 1440
+#  define MAX_HEIGHT 14400
 # endif
 
 typedef struct s_mchar

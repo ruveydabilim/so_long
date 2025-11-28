@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/04 17:05:26 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/11/22 18:55:19 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 	map_chars(map, maps, x, y);
 	if (maps->exit.count != 1 || maps->player.count != 1
 		|| maps->collectibles < 1)
-		return (freemsg(maps, cpymaps, "error! check character count"), NULL);
+		return (freemsg(maps, cpymaps, "Error\nCheck character count"), NULL);
 	if (!wall_check(map))
-		return (free(cpymaps), free(maps), ft_printf("error! check map is rectangular\
+		return (free(cpymaps), free(maps), ft_printf("Error\nCheck map is rectangular\
  or be enclosed by walls.\n"), NULL);
 	maps->collectible = ft_calloc(sizeof(t_mchar), (maps->collectibles + 1));
 	if (!maps->collectible)
@@ -122,7 +122,7 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 	floodfill(copymap, maps->player.x, maps->player.y);
 	map_chars(copymap, cpymaps, x, y);
 	if (cpymaps->exit.count != 0 || cpymaps->collectibles != 0)
-		return (freemsg(maps, cpymaps, "error! mapchars not reachable"), NULL);
+		return (freemsg(maps, cpymaps, "Error\nMapchars not reachable\n"), NULL);
 	maps->map = map;
 	return (free_all(cpymaps), maps);
 }
