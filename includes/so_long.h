@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/28 18:43:07 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/01 18:01:54 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,6 @@ int		abs_value(int n);
 int		manhattan_distance(int x1, int y1, int x2, int y2);
 void	init_directions(int dx[4], int dy[4]);
 char	**copy_map(char **original_map, int height);
+void	xpm_control(t_map *map_values);
+
 #endif
