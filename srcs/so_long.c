@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/28 18:42:53 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/09 12:33:16 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	*control_map(t_map *map_values, char map, int x, int y)
 		imgptr = map_values->imgptr.wall;
 	else
 		return (NULL);
-	mlx_put_image_to_window(map_values->init, map_values->window, \
-imgptr, y * width, x * height);
+	mlx_put_image_to_window(map_values->init, map_values->window,
+		imgptr, y * width, x * height);
 	return (imgptr);
 }
 
@@ -64,16 +64,19 @@ void	*so_long(char **map, t_map *map_values)
 {
 	void	*init;
 	void	*window;
+	int		x;
+	int		y;
 
 	init = mlx_init();
 	if (!init)
 		return (NULL);
-	if (map_values->map_height * 64 > MAX_HEIGHT
-		|| map_values->map_width * 64 > MAX_WIDTH)
+	mlx_get_screen_size(init, &x, &y);
+	if (map_values->map_height * 64 > y
+		|| map_values->map_width * 64 > x)
 		return (ft_printf("Error\nMap is too big\n"), NULL);
 	else
-		window = mlx_new_window(init, map_values->map_width * 64, \
-map_values->map_height * 64, "SO LONG");
+		window = mlx_new_window(init, map_values->map_width * 64,
+				map_values->map_height * 64, "SO LONG");
 	map_values->init = init;
 	if (!window)
 		return (NULL);

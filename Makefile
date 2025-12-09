@@ -1,8 +1,8 @@
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror 
 SRC = main.c map_parser.c map_validation.c so_long.c map_utils.c free_all.c \
-	key_utils.c find_shortest_path.c find_shortest_path_utils.c init_game.c
+	key_utils.c init_game.c
 GNL = ./external/get_next_line/get_next_line.c ./external/get_next_line/get_next_line_utils.c
 SRCS = $(addprefix srcs/, $(SRC))
 OBJS = $(SRCS:.c=.o)
@@ -18,7 +18,7 @@ INCLUDES = $(LIBFT) $(PRINTF) $(MLX)
 all: $(NAME)
 
 $(NAME): $(MLX) $(OBJS) $(LIBFT) $(PRINTF)
-	@$(CC) $(CFLAGS) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES) $(MLX_FLAG)
+	@$(CC) $(CFLAGS) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES) $(MLX_FLAG) 
 $(LIBFT):
 	make -s -C $(LIBFT_DIR)
 $(PRINTF):

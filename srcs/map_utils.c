@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:20 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/01 18:03:59 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/08 16:51:51 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void	update_img(t_map *map_values, int key)
 
 	width = 64;
 	height = 64;
+/* 	if (flag)
+		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
+"./textures/playerwithexit.xpm", &width, &height); */
 	if (map_values->imgptr.player)
 		mlx_destroy_image(map_values->init, map_values->imgptr.player);
 	if (key == 'W')

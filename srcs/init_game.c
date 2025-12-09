@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:51:40 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/01 18:01:40 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/09 12:40:41 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	xpm_control(t_map *map_values)
 		return ;
 }
 
-void	init_images(t_map *map_values)
+static void	init_images(t_map *map_values)
 {
 	int		width;
 	int		height;

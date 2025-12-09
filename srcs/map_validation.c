@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/22 18:55:19 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/09 12:50:19 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static int	wall_check(char **map)
 		if (map[i - 1][j++] != '1')
 			return (0);
 	i = 1;
+	if (j == 0)
+		j = 1;
 	while (map[i])
 		if (map[i][0] != '1' || map[i++][j - 1] != '1')
 			return (0);

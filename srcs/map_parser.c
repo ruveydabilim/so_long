@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 22:44:48 by rbilim            #+#    #+#             */
-/*   Updated: 2025/11/22 18:53:21 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/06 17:47:44 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	is_valid(char *arg)
 	if (len < 4)
 		return (0);
 	if (arg[len - 1] == 'r' && arg[len - 2] == 'e'
-		&& arg[len - 3] == 'b' && arg[len - 4] == '.')
+		&& arg[len - 3] == 'b' && arg[len - 4] == '.'
+		&& arg[len - 5] && arg[len -5] != '/')
 		return (1);
 	return (0);
 }
