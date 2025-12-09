@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/09 12:50:19 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/09 16:28:06 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,12 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 	maps = ft_calloc(sizeof(t_map), 1);
 	if (!maps || !cpymaps)
 		return (NULL);
-	map_chars(map, maps, x, y);
+	if (!map_chars(map, maps, x, y) || !wall_check(map))
+		return (free(cpymaps), free(maps), ft_printf("Error\nCheck map is rectangular\
+ or be enclosed by walls.\n"), NULL);
 	if (maps->exit.count != 1 || maps->player.count != 1
 		|| maps->collectibles < 1)
 		return (freemsg(maps, cpymaps, "Error\nCheck character count"), NULL);
-	if (!wall_check(map))
-		return (free(cpymaps), free(maps), ft_printf("Error\nCheck map is rectangular\
- or be enclosed by walls.\n"), NULL);
 	maps->collectible = ft_calloc(sizeof(t_mchar), (maps->collectibles + 1));
 	if (!maps->collectible)
 		return (free(cpymaps), free(maps), NULL);

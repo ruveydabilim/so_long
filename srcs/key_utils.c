@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/09 12:14:59 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/09 16:30:11 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,6 @@ static void	move_right(t_map *map_values)
 
 void	press_key(t_map *map_values, int key)
 {
-	int	flag;
-
-	if (map_values->collectibles == 0)
-		flag = 1;
 	if (key == 'A')
 		move_left(map_values);
 	else if (key == 'D')

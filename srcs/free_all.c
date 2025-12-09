@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:51:39 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/09 12:53:14 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/09 16:44:37 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ void	freemsg(void *free1, void *free2, char *message)
 		ft_printf("%s\n", message);
 }
 
-void	exit_message(t_map *map_values)
+void	exit_message(void)
 {
-	(void)map_values;
 	ft_printf("Congratulations! You finished the game.\n");
 }
 
