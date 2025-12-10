@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/09 16:30:11 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/09 18:41:48 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	move_up(t_map *map_values)
 		if (map[map_values->player.x - 1][map_values->player.y] == 'E'
 				&& map_values->collectibles == 0)
 		{
-			exit_message(map_values);
+			exit_message();
 			free_all(map_values);
 			exit(0);
 		}
@@ -55,7 +55,7 @@ static void	move_down(t_map *map_values)
 		if (map[map_values->player.x + 1][map_values->player.y] == 'E'
 			&& map_values->collectibles == 0)
 		{
-			exit_message(map_values);
+			exit_message();
 			free_all(map_values);
 			exit(0);
 		}
@@ -84,7 +84,7 @@ static void	move_left(t_map *map_values)
 		if (map[map_values->player.x][map_values->player.y - 1] == 'E'
 			&& map_values->collectibles == 0)
 		{
-			exit_message(map_values);
+			exit_message();
 			free_all(map_values);
 			exit(0);
 		}
@@ -113,7 +113,7 @@ static void	move_right(t_map *map_values)
 		if (map[map_values->player.x][map_values->player.y + 1] == 'E'
 			&& map_values->collectibles == 0)
 		{
-			exit_message(map_values);
+			exit_message();
 			free_all(map_values);
 			exit(0);
 		}

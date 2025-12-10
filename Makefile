@@ -27,6 +27,8 @@ $(PRINTF):
 $(MLX): mlx_install
 	make -s -C $(MLX_DIR)
 
+
+
 mlx_install:
 	@if [ ! -d "$(MLX_DIR)" ]; then \
 		git clone https://github.com/42paris/minilibx-linux.git mlx;\

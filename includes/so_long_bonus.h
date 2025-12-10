@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/09 18:41:09 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/09 18:29:01 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 # include "../external/mlx/mlx.h"
 # include "../external/ft_printf/ft_printf.h"
 # include "../external/libft/libft.h"
@@ -38,10 +38,14 @@ typedef struct s_img
 typedef struct s_map
 {
 	t_mchar	*collectible;
+	t_mchar	*bombs;
+	t_mchar	*enemies;
 	t_mchar	player;
 	t_mchar	exit;
 	t_img	imgptr;
 	char	**map;
+	int		bomb_count;
+	int		enemy_count;
 	int		map_height;
 	int		map_width;
 	int		collectibles;
@@ -63,7 +67,7 @@ void	free_images(t_map *map_values);
 void	redraw_window(t_map *map_values, char **map);
 void	*control_map(t_map *map_values, char map, int x, int y);
 void	update_img(t_map *map_values, int key);
-void	exit_message(void);
+void	exit_message(t_map *map_values);
 void	xpm_control(t_map *map_values);
 
 #endif
