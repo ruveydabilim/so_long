@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/09 18:29:01 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/11 16:20:35 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,21 @@ typedef struct s_img
 	void	*floor;
 	void	*wall;
 	void	*exit_open;
+	void	*enemy[5];
 }	t_img;
 
 typedef struct s_map
 {
 	t_mchar	*collectible;
-	t_mchar	*bombs;
 	t_mchar	*enemies;
 	t_mchar	player;
 	t_mchar	exit;
 	t_img	imgptr;
 	char	**map;
-	int		bomb_count;
 	int		enemy_count;
 	int		map_height;
+	int		current_frame;
+	int		frame_delay;
 	int		map_width;
 	int		collectibles;
 	int		move_count;

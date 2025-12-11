@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/10 16:34:36 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/11 16:27:24 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 
 static void	map_check_bonus(char **map, t_map *maps, int x, int y)
 {
-	if (map[x][y] == 'B')
-	{
-		if (maps->bombs)
-		{
-			maps->bombs[maps->bomb_count].x = x;
-			maps->bombs[maps->bomb_count].y = y;
-		}
-		maps->bomb_count++;
-	}
 	if (map[x][y] == 'X')
 	{
 		if (maps->enemies)
@@ -39,7 +30,6 @@ static t_map	*map_chars(char **map, t_map *maps, int x, int y)
 	int		temp;
 
 	temp = 0;
-	init_maps(maps);
 	while (map[x])
 	{
 		if (y != temp)
@@ -69,4 +59,5 @@ t_map	*map_validation_bonus(char **map, char **copymap, t_map *cpymaps)
 	y = 0;
 	maps = map_validation(map, copymap, cpymaps);
 	map_chars(map, maps, x, y);
+
 }

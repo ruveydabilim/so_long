@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/11 16:22:48 by rbilim           ###   ########.fr       */
+/*   Created: 2025/12/11 18:04:24 by rbilim            #+#    #+#             */
+/*   Updated: 2025/12/11 19:04:33 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+
+#include "../includes/so_long_bonus.h"
 
 static int	handle_key( int keycode, t_map *map_value)
 {
@@ -71,12 +72,12 @@ void	*so_long(char **map, t_map *map_values)
 	if (!init)
 		return (NULL);
 	mlx_get_screen_size(init, &x, &y);
-	if (map_values->map_height * 64 > y
-		|| map_values->map_width * 64 > x)
+	if (map_values->map_height + 1 * 64 > y
+		|| map_values->map_width + 1 * 64 > x)
 		return (ft_printf("Error\nMap is too big\n"), NULL);
 	else
-		window = mlx_new_window(init, map_values->map_width * 64,
-				map_values->map_height * 64, "SO LONG");
+		window = mlx_new_window(init, map_values->map_width + 1 * 64,
+				map_values->map_height + 1 * 64, "SO LONG");
 	map_values->init = init;
 	if (!window)
 		return (NULL);
