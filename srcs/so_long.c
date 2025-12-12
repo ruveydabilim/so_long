@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/11 16:22:48 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/12 16:27:48 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	*control_map(t_map *map_values, char map, int x, int y)
 		imgptr = map_values->imgptr.floor;
 	else if (map == '1')
 		imgptr = map_values->imgptr.wall;
-	else
-		return (NULL);
 	mlx_put_image_to_window(map_values->init, map_values->window,
 		imgptr, y * width, x * height);
 	return (imgptr);

@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 18:04:24 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/11 19:04:33 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/12 18:44:15 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,13 @@ void	*control_map(t_map *map_values, char map, int x, int y)
 	return (imgptr);
 }
 
-void	*so_long(char **map, t_map *map_values)
+void enemy_movement(t_map map_values)
+{
+	//gettimeofday fonksiyonundan dönen değere göre 
+	//hareket etme ve sprite güncelleyecek fonksiyon.
+}
+
+void	*so_long_bonus(char **map, t_map *map_values)
 {
 	void	*init;
 	void	*window;
@@ -85,6 +91,7 @@ void	*so_long(char **map, t_map *map_values)
 	init_window(map_values, map);
 	mlx_hook(window, 2, (1L << 0), handle_key, map_values);
 	mlx_hook(window, 17, 0, close_window, map_values);
+	mlx_loop_hook(init, enemy_movement, window);
 	mlx_loop(init);
 	return (NULL);
 }

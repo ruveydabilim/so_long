@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:35:26 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/11 19:04:07 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/12 18:32:17 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 	if (!cpymaps)
 		return (free_doublepoint((void **)map),
 			free_doublepoint((void **)mapcpy), 1);
-	map_values = map_validation(map, mapcpy, cpymaps);
+	map_values = map_validation_bonus(map, mapcpy, cpymaps);
 	free_doublepoint((void **)mapcpy);
 	if (!map_values)
 		return (free_doublepoint((void **)map), 1);
