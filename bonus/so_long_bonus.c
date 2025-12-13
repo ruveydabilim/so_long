@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 18:04:24 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/12 18:44:15 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/13 17:39:11 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,40 @@ void	*control_map(t_map *map_values, char map, int x, int y)
 	return (imgptr);
 }
 
-void enemy_movement(t_map map_values)
+void	move_enemies(t_map *map_values)
 {
-	//gettimeofday fonksiyonundan dönen değere göre 
-	//hareket etme ve sprite güncelleyecek fonksiyon.
+	int	i;
+	int	x;
+	int	y;
+
+	i = 0;
+	while (i < map_values->enemy_count)
+	{
+		x = map_values->enemies[i].x;
+		y = map_values->enemies[i].y;
+		if (map_values->map[x + 1][y] == '0'
+			|| map_values->map[x + 1][y] == 'P')
+		{
+			if (map_values->map[x + 1][y] == 'P')
+				close_window(map_values);
+			map_values->map[x][y] = '0';
+			control_map(map_values, '0', x, y);
+			map_values->enemies[i].x += 1;
+			map_values->map[x + 1][y] = 'X';
+			control_map(map_values, 'X', x + 1, y);
+		}
+		i++;
+	}
+}
+
+void	enemy_movement(t_map map_values)
+{
+	static int	frame;
+
+	if (frame++ < 3000)
+		return ;
+	frame = 0;
+	move_enemies(&map_values);
 }
 
 void	*so_long_bonus(char **map, t_map *map_values)
