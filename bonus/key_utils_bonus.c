@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_utils.c                                        :+:      :+:    :+:   */
+/*   key_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 18:58:35 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 18:55:37 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 static void	move_up(t_map *map_values)
 {
@@ -19,13 +19,15 @@ static void	move_up(t_map *map_values)
 	map = map_values->map;
 	if (map[map_values->player.x - 1][map_values->player.y] != '1')
 	{
+		if (map[map_values->player.x - 1][map_values->player.y] == 'X')
+			exit_message(map_values, 0);
 		if (map[map_values->player.x - 1][map_values->player.y] == 'C')
 			map_values->collectibles--;
 		map_values->move_count++;
 		ft_printf("move count: %d\n", map_values->move_count);
 		if (map[map_values->player.x - 1][map_values->player.y] == 'E'
 				&& map_values->collectibles == 0)
-			exit_message(map_values);
+			exit_message(map_values, 1);
 		if (map[map_values->player.x][map_values->player.y]
 			!= map[map_values->exit.x][map_values->exit.y])
 			map[map_values->player.x][map_values->player.y] = '0';
@@ -44,13 +46,15 @@ static void	move_down(t_map *map_values)
 	map = map_values->map;
 	if (map[map_values->player.x + 1][map_values->player.y] != '1')
 	{
+		if (map[map_values->player.x + 1][map_values->player.y] == 'X')
+			exit_message(map_values, 0);
 		if (map[map_values->player.x + 1][map_values->player.y] == 'C')
 			map_values->collectibles--;
 		map_values->move_count++;
 		ft_printf("move count: %d\n", map_values->move_count);
 		if (map[map_values->player.x + 1][map_values->player.y] == 'E'
 			&& map_values->collectibles == 0)
-			exit_message(map_values);
+			exit_message(map_values, 1);
 		if (map[map_values->player.x][map_values->player.y]
 			!= map[map_values->exit.x][map_values->exit.y])
 			map[map_values->player.x][map_values->player.y] = '0';
@@ -69,13 +73,15 @@ static void	move_left(t_map *map_values)
 	map = map_values->map;
 	if (map[map_values->player.x][map_values->player.y - 1] != '1')
 	{
+		if (map[map_values->player.x][map_values->player.y - 1] == 'X')
+			exit_message(map_values, 0);
 		if (map[map_values->player.x][map_values->player.y - 1] == 'C')
 			map_values->collectibles--;
 		map_values->move_count++;
 		ft_printf("move count: %d\n", map_values->move_count);
 		if (map[map_values->player.x][map_values->player.y - 1] == 'E'
 			&& map_values->collectibles == 0)
-			exit_message(map_values);
+			exit_message(map_values, 1);
 		if (map[map_values->player.x][map_values->player.y]
 			!= map[map_values->exit.x][map_values->exit.y])
 			map[map_values->player.x][map_values->player.y] = '0';
@@ -94,13 +100,15 @@ static void	move_right(t_map *map_values)
 	map = map_values->map;
 	if (map[map_values->player.x][map_values->player.y + 1] != '1')
 	{
+		if (map[map_values->player.x][map_values->player.y + 1] == 'X')
+			exit_message(map_values, 0);
 		if (map[map_values->player.x][map_values->player.y + 1] == 'C')
 			map_values->collectibles--;
 		map_values->move_count++;
 		ft_printf("move count: %d\n", map_values->move_count);
 		if (map[map_values->player.x][map_values->player.y + 1] == 'E'
 			&& map_values->collectibles == 0)
-			exit_message(map_values);
+			exit_message(map_values, 1);
 		if (map[map_values->player.x][map_values->player.y]
 			!= map[map_values->exit.x][map_values->exit.y])
 			map[map_values->player.x][map_values->player.y] = '0';
@@ -124,5 +132,5 @@ void	press_key(t_map *map_values, int key)
 		move_down(map_values);
 	else
 		return ;
-	redraw_window(map_values, map_values->map);
+	redraw_window(map_values);
 }

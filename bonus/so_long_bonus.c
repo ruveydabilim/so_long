@@ -1,15 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_bonus.c                                    :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/11 18:04:24 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/13 17:39:11 by rbilim           ###   ########.fr       */
+/*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
+/*   Updated: 2025/12/14 17:51:21 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/so_long_bonus.h"
 
@@ -54,8 +53,8 @@ void	*control_map(t_map *map_values, char map, int x, int y)
 		imgptr = map_values->imgptr.floor;
 	else if (map == '1')
 		imgptr = map_values->imgptr.wall;
-	else
-		return (NULL);
+	else if (map == 'X')
+		imgptr = map_values->imgptr.enemy[map_values->current_frame];
 	mlx_put_image_to_window(map_values->init, map_values->window,
 		imgptr, y * width, x * height);
 	return (imgptr);
@@ -67,6 +66,8 @@ void	move_enemies(t_map *map_values)
 	int	x;
 	int	y;
 
+	if (!map_values->enemies || map_values->enemy_count == 0)
+		return ;
 	i = 0;
 	while (i < map_values->enemy_count)
 	{
@@ -78,26 +79,38 @@ void	move_enemies(t_map *map_values)
 			if (map_values->map[x + 1][y] == 'P')
 				close_window(map_values);
 			map_values->map[x][y] = '0';
-			control_map(map_values, '0', x, y);
 			map_values->enemies[i].x += 1;
 			map_values->map[x + 1][y] = 'X';
-			control_map(map_values, 'X', x + 1, y);
 		}
 		i++;
 	}
+
 }
 
-void	enemy_movement(t_map map_values)
+int	enemy_movement(t_map *map_values)
 {
-	static int	frame;
+	static int	counter;
+	static int	move_counter;
 
-	if (frame++ < 3000)
-		return ;
-	frame = 0;
-	move_enemies(&map_values);
+	counter++;
+	if (counter >= 1000)
+	{
+		map_values->current_frame++;
+		if (map_values->current_frame >= 5)
+			map_values->current_frame = 0;
+		counter = 0;
+	}
+	move_counter++;
+	if (move_counter >= 1000)
+	{
+		move_enemies(map_values);
+		move_counter = 0;
+	}
+	redraw_window(map_values);
+	return (0);
 }
 
-void	*so_long_bonus(char **map, t_map *map_values)
+void	*so_long(char **map, t_map *map_values)
 {
 	void	*init;
 	void	*window;
@@ -108,12 +121,12 @@ void	*so_long_bonus(char **map, t_map *map_values)
 	if (!init)
 		return (NULL);
 	mlx_get_screen_size(init, &x, &y);
-	if (map_values->map_height + 1 * 64 > y
-		|| map_values->map_width + 1 * 64 > x)
-		return (ft_printf("Error\nMap is too big\n"), NULL);
-	else
-		window = mlx_new_window(init, map_values->map_width + 1 * 64,
-				map_values->map_height + 1 * 64, "SO LONG");
+	if (map_values->map_height * 64 > y
+		|| map_values->map_width * 64 > x)
+		return (mlx_destroy_display(init), free(init),
+			freemsg(NULL, NULL, "Error\nMap is too big"), NULL);
+	window = mlx_new_window(init, map_values->map_width * 64,
+			map_values->map_height * 64, "SO LONG");
 	map_values->init = init;
 	if (!window)
 		return (NULL);
@@ -121,7 +134,7 @@ void	*so_long_bonus(char **map, t_map *map_values)
 	init_window(map_values, map);
 	mlx_hook(window, 2, (1L << 0), handle_key, map_values);
 	mlx_hook(window, 17, 0, close_window, map_values);
-	mlx_loop_hook(init, enemy_movement, window);
+	mlx_loop_hook(init, enemy_movement, map_values);
 	mlx_loop(init);
 	return (NULL);
 }

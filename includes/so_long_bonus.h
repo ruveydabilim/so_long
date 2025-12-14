@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/11 16:20:35 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 18:56:45 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ void	free_all(t_map *map);
 void	free_doublepoint(void **ptr);
 void	init_window(t_map *map_values, char **map);
 void	free_images(t_map *map_values);
-void	redraw_window(t_map *map_values, char **map);
+int		redraw_window(t_map *map_values);
 void	*control_map(t_map *map_values, char map, int x, int y);
 void	update_img(t_map *map_values, int key);
-void	exit_message(t_map *map_values);
+void	exit_message(t_map *map_values, int is_won);
 void	xpm_control(t_map *map_values);
+int		enemy_movement(t_map *map_values);
+void	move_enemies(t_map *map_values);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/12 16:27:48 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 17:51:51 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void	*so_long(char **map, t_map *map_values)
 	mlx_get_screen_size(init, &x, &y);
 	if (map_values->map_height * 64 > y
 		|| map_values->map_width * 64 > x)
-		return (ft_printf("Error\nMap is too big\n"), NULL);
-	else
-		window = mlx_new_window(init, map_values->map_width * 64,
-				map_values->map_height * 64, "SO LONG");
+		return (mlx_destroy_display(init), free(init),
+			freemsg(NULL, NULL, "Error\nMap is too big"), NULL);
+	window = mlx_new_window(init, map_values->map_width * 64,
+			map_values->map_height * 64, "SO LONG");
 	map_values->init = init;
 	if (!window)
 		return (NULL);

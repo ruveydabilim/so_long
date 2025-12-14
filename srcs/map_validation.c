@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/09 18:49:26 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 18:44:09 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	wall_check(char **map)
 	return (1);
 }
 
-static void	map_check(char **map, t_map *maps, int x, int y)
+static int	map_check(char **map, t_map *maps, int x, int y)
 {
 	if (map[x][y] == 'P')
 	{
@@ -58,13 +58,13 @@ static void	map_check(char **map, t_map *maps, int x, int y)
 		maps->player.y = y;
 		maps->player.count++;
 	}
-	if (map[x][y] == 'E')
+	else if (map[x][y] == 'E')
 	{
 		maps->exit.x = x;
 		maps->exit.y = y;
 		maps->exit.count++;
 	}
-	if (map[x][y] == 'C')
+	else if (map[x][y] == 'C')
 	{
 		if (maps->collectible)
 		{
@@ -73,6 +73,9 @@ static void	map_check(char **map, t_map *maps, int x, int y)
 		}
 		maps->collectibles++;
 	}
+	else if (map[x][y] != '0' && map[x][y] != '1' && map[x][y] != '\n')
+		return (1);
+	return (0);
 }
 
 static t_map	*map_chars(char **map, t_map *maps, int x, int y)
@@ -83,12 +86,13 @@ static t_map	*map_chars(char **map, t_map *maps, int x, int y)
 	init_maps(maps);
 	while (map[x])
 	{
-		if (y != temp)
+		if (y != temp && temp != 0)
 			return (0);
 		y = 0;
-		while (map[x][y])
+		while (map[x][y] && map[x][y] != '\n')
 		{
-			map_check(map, maps, x, y);
+			if (map_check(map, maps, x, y))
+				return (0);
 			y++;
 			if (x == 0)
 				temp = y;
@@ -111,7 +115,10 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 	maps = ft_calloc(sizeof(t_map), 1);
 	if (!maps || !cpymaps)
 		return (NULL);
-	if (!map_chars(map, maps, x, y) || !wall_check(map))
+	if (!map_chars(map, maps, x, y))
+		return (freemsg(maps, cpymaps, "Error\nInvalid character in map"),
+			NULL);
+	if (!wall_check(map))
 		return (freemsg(maps, cpymaps, "Error\nCheck map is rectangular\
  or be enclosed by walls."), NULL);
 	if (maps->exit.count != 1 || maps->player.count != 1

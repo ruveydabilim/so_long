@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_all.c                                         :+:      :+:    :+:   */
+/*   free_all_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:51:39 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 18:57:32 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 18:53:33 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	free_doublepoint(void **ptr)
 {
@@ -34,15 +34,20 @@ void	freemsg(void *free1, void *free2, char *message)
 		ft_printf("%s\n", message);
 }
 
-void	exit_message(t_map *map_values)
+void	exit_message(t_map *map_values, int is_won)
 {
-	ft_printf("Congratulations! You finished the game.\n");
+	if (is_won)
+		ft_printf("Congratulations! You finished the game.\n");
+	else
+		ft_printf("Game Over! You hit an enemy.\n");
 	free_all(map_values);
 	exit(0);
 }
 
 void	free_images(t_map *map_values)
 {
+	int	i;
+
 	if (!map_values->init)
 		return ;
 	if (map_values->imgptr.player)
@@ -57,6 +62,13 @@ void	free_images(t_map *map_values)
 		mlx_destroy_image(map_values->init, map_values->imgptr.wall);
 	if (map_values->imgptr.exit_open)
 		mlx_destroy_image(map_values->init, map_values->imgptr.exit_open);
+	i = 0;
+	while (i < 5)
+	{
+		if (map_values->imgptr.enemy[i])
+			mlx_destroy_image(map_values->init, map_values->imgptr.enemy[i]);
+		i++;
+	}
 }
 
 void	free_all(t_map *map_values)
@@ -74,6 +86,8 @@ void	free_all(t_map *map_values)
 		free_doublepoint((void **)map_values->map);
 	if (map_values->collectible)
 		free(map_values->collectible);
+	if (map_values->enemies)
+		free(map_values->enemies);
 	free(map_values->init);
 	free(map_values);
 }

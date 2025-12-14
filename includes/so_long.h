@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/09 18:41:09 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 18:57:54 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	free_images(t_map *map_values);
 void	redraw_window(t_map *map_values, char **map);
 void	*control_map(t_map *map_values, char map, int x, int y);
 void	update_img(t_map *map_values, int key);
-void	exit_message(void);
+void	exit_message(t_map *map_values);
 void	xpm_control(t_map *map_values);
 
 #endif
