@@ -6,16 +6,18 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 18:57:54 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 19:47:07 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# include "../external/mlx/mlx.h"
+# include "../external/get_next_line/get_next_line.h"
 # include "../external/ft_printf/ft_printf.h"
 # include "../external/libft/libft.h"
-# include "../external/get_next_line/get_next_line.h"
+# include "../external/mlx/mlx.h"
+# include "error_messages.h"
+# include "textures.h"
 # include <fcntl.h>
 
 typedef struct s_mchar

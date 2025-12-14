@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validation.c                                   :+:      :+:    :+:   */
+/*   map_validation_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 18:42:01 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 23:56:48 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static int	map_check(char **map, t_map *maps, int x, int y)
 		{
 			maps->enemies[maps->enemy_count].x = x;
 			maps->enemies[maps->enemy_count].y = y;
+			maps->enemies[maps->enemy_count].direction = 1;
 		}
 		maps->enemy_count++;
 	}
@@ -87,12 +88,13 @@ static int	map_check(char **map, t_map *maps, int x, int y)
 	return (0);
 }
 
-static t_map	*map_chars(char **map, t_map *maps, int x, int y)
+static t_map	*map_chars(char **map, t_map *maps, int x, int y, int do_init)
 {
 	int		temp;
 
 	temp = 0;
-	init_maps(maps);
+	if (do_init)
+		init_maps(maps);
 	while (map[x])
 	{
 		if (y != temp && temp != 0)
@@ -124,15 +126,14 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 	maps = ft_calloc(sizeof(t_map), 1);
 	if (!maps || !cpymaps)
 		return (NULL);
-	if (!map_chars(map, maps, x, y))
-		return (freemsg(maps, cpymaps, "Error\nInvalid character in map"),
+	if (!map_chars(map, maps, x, y, 1))
+		return (freemsg(maps, cpymaps, INVCHAR),
 			NULL);
 	if (!wall_check(map))
-		return (freemsg(maps, cpymaps, "Error\nCheck map is rectangular\
- or be enclosed by walls."), NULL);
+		return (freemsg(maps, cpymaps, NOTRECTERROR), NULL);
 	if (maps->exit.count != 1 || maps->player.count != 1
 		|| maps->collectibles < 1)
-		return (freemsg(maps, cpymaps, "Error\nCheck character count"), NULL);
+		return (freemsg(maps, cpymaps, WRONGCHARCOUNT), NULL);
 	maps->collectible = ft_calloc(sizeof(t_mchar), (maps->collectibles + 1));
 	if (!maps->collectible)
 		return (free(cpymaps), free(maps), NULL);
@@ -142,10 +143,13 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 		if (!maps->enemies)
 			return (free(cpymaps), free(maps->collectible), free(maps), NULL);
 	}
+	maps->collectibles = 0;
+	maps->enemy_count = 0;
+	map_chars(map, maps, x, y, 0);
 	floodfill(copymap, maps->player.x, maps->player.y);
-	map_chars(copymap, cpymaps, x, y);
+	map_chars(copymap, cpymaps, x, y, 1);
 	if (cpymaps->exit.count != 0 || cpymaps->collectibles != 0)
-		return (freemsg(maps, cpymaps, "Error\nMap chars not reachable"), NULL);
+		return (freemsg(maps, cpymaps, NOTPLAYABLE), NULL);
 	maps->map = map;
 	return (free_all(cpymaps), maps);
 }

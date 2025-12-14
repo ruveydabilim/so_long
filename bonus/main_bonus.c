@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 22:23:10 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 13:50:33 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 23:59:00 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	t_map	*cpymaps;
 
 	if (argc != 2)
-		return (ft_printf("Error\nInvalid argument count.\n"), 1);
+		return (ft_printf(INVARGCOUNT), 1);
 	map = map_parser(argv[1]);
 	if (!map)
 		return (1);

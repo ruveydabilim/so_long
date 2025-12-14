@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:51:39 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 18:53:33 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 23:59:42 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	freemsg(void *free1, void *free2, char *message)
 void	exit_message(t_map *map_values, int is_won)
 {
 	if (is_won)
-		ft_printf("Congratulations! You finished the game.\n");
+		ft_printf(WONGAME);
 	else
-		ft_printf("Game Over! You hit an enemy.\n");
+		ft_printf(GAMEOVER);
 	free_all(map_values);
 	exit(0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 17:51:21 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 22:28:10 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,39 +32,12 @@ static int	close_window(t_map *map_value)
 	return (free_all(map_value), exit(0), 0);
 }
 
-void	*control_map(t_map *map_values, char map, int x, int y)
-{
-	int			width;
-	int			height;
-	void		*imgptr;
-
-	imgptr = NULL;
-	width = 64;
-	height = 64;
-	if (map == 'P')
-		imgptr = map_values->imgptr.player;
-	else if (map == 'C')
-		imgptr = map_values->imgptr.collectible;
-	else if (map == 'E' && map_values->collectibles != 0)
-		imgptr = map_values->imgptr.exit;
-	else if (map == 'E' && map_values->collectibles == 0)
-		imgptr = map_values->imgptr.exit_open;
-	else if (map == '0')
-		imgptr = map_values->imgptr.floor;
-	else if (map == '1')
-		imgptr = map_values->imgptr.wall;
-	else if (map == 'X')
-		imgptr = map_values->imgptr.enemy[map_values->current_frame];
-	mlx_put_image_to_window(map_values->init, map_values->window,
-		imgptr, y * width, x * height);
-	return (imgptr);
-}
-
 void	move_enemies(t_map *map_values)
 {
 	int	i;
 	int	x;
 	int	y;
+	int	n_y;
 
 	if (!map_values->enemies || map_values->enemy_count == 0)
 		return ;
@@ -73,18 +46,20 @@ void	move_enemies(t_map *map_values)
 	{
 		x = map_values->enemies[i].x;
 		y = map_values->enemies[i].y;
-		if (map_values->map[x + 1][y] == '0'
-			|| map_values->map[x + 1][y] == 'P')
+		n_y = y + map_values->enemies[i].direction;
+		if (map_values->map[x][n_y] == '1' || map_values->map[x][n_y] == 'C'
+			|| map_values->map[x][n_y] == 'E' || map_values->map[x][n_y] == 'X')
+			map_values->enemies[i].direction *= -1;
+		else
 		{
-			if (map_values->map[x + 1][y] == 'P')
-				close_window(map_values);
+			if (map_values->map[x][n_y] == 'P')
+				exit_message(map_values, 0);
 			map_values->map[x][y] = '0';
-			map_values->enemies[i].x += 1;
-			map_values->map[x + 1][y] = 'X';
+			map_values->enemies[i].y = n_y;
+			map_values->map[x][n_y] = 'X';
 		}
 		i++;
 	}
-
 }
 
 int	enemy_movement(t_map *map_values)
@@ -93,7 +68,7 @@ int	enemy_movement(t_map *map_values)
 	static int	move_counter;
 
 	counter++;
-	if (counter >= 1000)
+	if (counter >= 250)
 	{
 		map_values->current_frame++;
 		if (map_values->current_frame >= 5)
@@ -101,7 +76,7 @@ int	enemy_movement(t_map *map_values)
 		counter = 0;
 	}
 	move_counter++;
-	if (move_counter >= 1000)
+	if (move_counter >= 500)
 	{
 		move_enemies(map_values);
 		move_counter = 0;
@@ -124,7 +99,7 @@ void	*so_long(char **map, t_map *map_values)
 	if (map_values->map_height * 64 > y
 		|| map_values->map_width * 64 > x)
 		return (mlx_destroy_display(init), free(init),
-			freemsg(NULL, NULL, "Error\nMap is too big"), NULL);
+			freemsg(NULL, NULL, BIGMAPERROR), NULL);
 	window = mlx_new_window(init, map_values->map_width * 64,
 			map_values->map_height * 64, "SO LONG");
 	map_values->init = init;

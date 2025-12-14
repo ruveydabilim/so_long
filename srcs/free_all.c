@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:51:39 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 18:57:32 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 19:54:18 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	freemsg(void *free1, void *free2, char *message)
 
 void	exit_message(t_map *map_values)
 {
-	ft_printf("Congratulations! You finished the game.\n");
+	ft_printf(WONGAME);
 	free_all(map_values);
 	exit(0);
 }

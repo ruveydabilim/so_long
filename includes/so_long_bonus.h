@@ -6,16 +6,18 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 18:56:45 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 19:46:46 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_BONUS_H
 # define SO_LONG_BONUS_H
-# include "../external/mlx/mlx.h"
+# include "../external/get_next_line/get_next_line.h"
 # include "../external/ft_printf/ft_printf.h"
 # include "../external/libft/libft.h"
-# include "../external/get_next_line/get_next_line.h"
+# include "../external/mlx/mlx.h"
+# include "error_messages.h"
+# include "textures.h"
 # include <fcntl.h>
 
 typedef struct s_mchar
@@ -23,6 +25,7 @@ typedef struct s_mchar
 	int	x;
 	int	y;
 	int	count;
+	int	direction;
 }	t_mchar;
 
 typedef struct s_img

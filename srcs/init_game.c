@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:51:40 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/12 14:31:07 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 19:53:53 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ static void	init_images(t_map *map_values)
 
 	width = 64;
 	height = 64;
-	map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-"./textures/players.xpm", &width, &height);
-	map_values->imgptr.collectible = mlx_xpm_file_to_image(map_values->init, \
-"./textures/collectible.xpm", &width, &height);
-	map_values->imgptr.exit = mlx_xpm_file_to_image(map_values->init, \
-"./textures/exit.xpm", &width, &height);
-	map_values->imgptr.floor = mlx_xpm_file_to_image(map_values->init, \
-"./textures/floor.xpm", &width, &height);
-	map_values->imgptr.wall = mlx_xpm_file_to_image(map_values->init, \
-"./textures/wall.xpm", &width, &height);
-	map_values->imgptr.exit_open = mlx_xpm_file_to_image(map_values->init, \
-"./textures/exit_open.xpm", &width, &height);
+	map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init,
+			PLAYER, &width, &height);
+	map_values->imgptr.collectible = mlx_xpm_file_to_image(map_values->init,
+			COLL, &width, &height);
+	map_values->imgptr.exit = mlx_xpm_file_to_image(map_values->init,
+			EXIT, &width, &height);
+	map_values->imgptr.floor = mlx_xpm_file_to_image(map_values->init,
+			FLOOR, &width, &height);
+	map_values->imgptr.wall = mlx_xpm_file_to_image(map_values->init,
+			WALL, &width, &height);
+	map_values->imgptr.exit_open = mlx_xpm_file_to_image(map_values->init,
+			EXIT_OPEN, &width, &height);
 	xpm_control(map_values);
 }
 

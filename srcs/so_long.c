@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 17:51:51 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 19:47:37 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	*so_long(char **map, t_map *map_values)
 	if (map_values->map_height * 64 > y
 		|| map_values->map_width * 64 > x)
 		return (mlx_destroy_display(init), free(init),
-			freemsg(NULL, NULL, "Error\nMap is too big"), NULL);
+			freemsg(NULL, NULL, BIGMAPERROR), NULL);
 	window = mlx_new_window(init, map_values->map_width * 64,
 			map_values->map_height * 64, "SO LONG");
 	map_values->init = init;

@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:51:40 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 18:50:55 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 21:14:47 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,28 @@ static void	init_images(t_map *map_values)
 
 	width = 64;
 	height = 64;
-	map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-"./textures/players.xpm", &width, &height);
-	map_values->imgptr.collectible = mlx_xpm_file_to_image(map_values->init, \
-"./textures/collectible.xpm", &width, &height);
-	map_values->imgptr.exit = mlx_xpm_file_to_image(map_values->init, \
-"./textures/exit.xpm", &width, &height);
-	map_values->imgptr.floor = mlx_xpm_file_to_image(map_values->init, \
-"./textures/floor.xpm", &width, &height);
-	map_values->imgptr.wall = mlx_xpm_file_to_image(map_values->init, \
-"./textures/wall.xpm", &width, &height);
-	map_values->imgptr.exit_open = mlx_xpm_file_to_image(map_values->init, \
-"./textures/exit_open.xpm", &width, &height);
-	map_values->imgptr.enemy[0] = mlx_xpm_file_to_image(map_values->init, \
-"./textures/enemy1.xpm", &width, &height);
-	map_values->imgptr.enemy[1] = mlx_xpm_file_to_image(map_values->init, \
-"./textures/enemy2.xpm", &width, &height);
-	map_values->imgptr.enemy[2] = mlx_xpm_file_to_image(map_values->init, \
-"./textures/enemy3.xpm", &width, &height);
-	map_values->imgptr.enemy[3] = mlx_xpm_file_to_image(map_values->init, \
-"./textures/enemy4.xpm", &width, &height);
-	map_values->imgptr.enemy[4] = mlx_xpm_file_to_image(map_values->init, \
-"./textures/enemy5.xpm", &width, &height);
+	map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init,
+			PLAYER, &width, &height);
+	map_values->imgptr.collectible = mlx_xpm_file_to_image(map_values->init,
+			COLL, &width, &height);
+	map_values->imgptr.exit = mlx_xpm_file_to_image(map_values->init,
+			EXIT, &width, &height);
+	map_values->imgptr.floor = mlx_xpm_file_to_image(map_values->init,
+			FLOOR, &width, &height);
+	map_values->imgptr.wall = mlx_xpm_file_to_image(map_values->init,
+			WALL, &width, &height);
+	map_values->imgptr.exit_open = mlx_xpm_file_to_image(map_values->init,
+			EXIT_OPEN, &width, &height);
+	map_values->imgptr.enemy[0] = mlx_xpm_file_to_image(map_values->init,
+			ENEMYS1, &width, &height);
+	map_values->imgptr.enemy[1] = mlx_xpm_file_to_image(map_values->init,
+			ENEMYS2, &width, &height);
+	map_values->imgptr.enemy[2] = mlx_xpm_file_to_image(map_values->init,
+			ENEMYS3, &width, &height);
+	map_values->imgptr.enemy[3] = mlx_xpm_file_to_image(map_values->init,
+			ENEMYS4, &width, &height);
+	map_values->imgptr.enemy[4] = mlx_xpm_file_to_image(map_values->init,
+			ENEMYS5, &width, &height);
 	xpm_control(map_values);
 }
 

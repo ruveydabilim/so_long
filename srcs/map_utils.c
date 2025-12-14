@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:20 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/09 14:24:22 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/14 19:51:21 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ void	update_img(t_map *map_values, int key)
 	if (map_values->imgptr.player)
 		mlx_destroy_image(map_values->init, map_values->imgptr.player);
 	if (key == 'W')
-		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-"./textures/move_up.xpm", &width, &height);
+		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init,
+				MOVE_UP, &width, &height);
 	else if (key == 'A')
-		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-"./textures/move_left.xpm", &width, &height);
+		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init,
+				MOVE_LEFT, &width, &height);
 	else if (key == 'S')
-		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-"./textures/move_down.xpm", &width, &height);
+		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init,
+				MOVE_DOWN, &width, &height);
 	else if (key == 'D')
-		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init, \
-"./textures/players.xpm", &width, &height);
+		map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init,
+				PLAYER, &width, &height);
 	xpm_control(map_values);
 }
 
