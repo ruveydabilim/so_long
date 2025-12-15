@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:20 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 23:29:04 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 23:46:23 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,38 +36,25 @@ void	update_img(t_map *map_values, int key)
 	xpm_control(map_values);
 }
 
-void	*control_map(t_map *map_values, char map, int x, int y)
+static int	is_enemy_position(t_map *map_values, int x, int y)
 {
-	int			width;
-	int			height;
-	void		*imgptr;
+	int	i;
 
-	imgptr = NULL;
-	width = 64;
-	height = 64;
-	if (map == 'P')
-		imgptr = map_values->imgptr.player;
-	else if (map == 'C')
-		imgptr = map_values->imgptr.collectible;
-	else if (map == 'E' && map_values->collectibles != 0)
-		imgptr = map_values->imgptr.exit;
-	else if (map == 'E' && map_values->collectibles == 0)
-		imgptr = map_values->imgptr.exit_open;
-	else if (map == '0')
-		imgptr = map_values->imgptr.floor;
-	else if (map == '1')
-		imgptr = map_values->imgptr.wall;
-	else if (map == 'X')
-		imgptr = map_values->imgptr.enemy[map_values->current_frame];
-	mlx_put_image_to_window(map_values->init, map_values->window,
-		imgptr, y * width, (x + 1) * height);
-	return (imgptr);
+	i = 0;
+	while (i < map_values->enemy_count)
+	{
+		if (map_values->enemies[i].x == x && map_values->enemies[i].y == y)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	redraw_window(t_map *map_values)
 {
 	int		x;
 	int		y;
+	char	tile;
 
 	x = 0;
 	y = 0;
@@ -76,7 +63,11 @@ int	redraw_window(t_map *map_values)
 		y = 0;
 		while (map_values->map[x][y] && map_values->map[x][y] != '\n')
 		{
-			control_map(map_values, map_values->map[x][y], x, y);
+			if (is_enemy_position(map_values, x, y))
+				tile = 'X';
+			else
+				tile = map_values->map[x][y];
+			control_map(map_values, tile, x, y);
 			y++;
 		}
 		x++;

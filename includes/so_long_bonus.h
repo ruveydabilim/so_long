@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 17:50:52 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 23:35:12 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "error_messages.h"
 # include "textures.h"
 # include <fcntl.h>
+# include <sys/time.h>
 
 typedef struct s_mchar
 {
@@ -44,21 +45,23 @@ typedef struct s_img
 
 typedef struct s_map
 {
-	t_mchar	*collectible;
-	t_mchar	*enemies;
-	t_mchar	player;
-	t_mchar	exit;
-	t_img	imgptr;
-	char	**map;
-	int		enemy_count;
-	int		map_height;
-	int		current_frame;
-	int		frame_delay;
-	int		map_width;
-	int		collectibles;
-	int		move_count;
-	void	*init;
-	void	*window;
+	t_mchar			*collectible;
+	t_mchar			*enemies;
+	t_mchar			player;
+	t_mchar			exit;
+	t_img			imgptr;
+	char			**map;
+	int				enemy_count;
+	int				map_height;
+	int				current_frame;
+	int				frame_delay;
+	int				map_width;
+	int				collectibles;
+	int				move_count;
+	void			*init;
+	void			*window;
+	struct timeval	last_frame_time;
+	struct timeval	last_move_time;
 }	t_map;
 
 char	**map_parser(char *arg);

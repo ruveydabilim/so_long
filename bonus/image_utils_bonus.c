@@ -6,11 +6,39 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:50:43 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 16:16:23 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 23:46:38 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long_bonus.h"
+
+void	*control_map(t_map *map_values, char map, int x, int y)
+{
+	int			width;
+	int			height;
+	void		*imgptr;
+
+	imgptr = NULL;
+	width = 64;
+	height = 64;
+	if (map == 'P')
+		imgptr = map_values->imgptr.player;
+	else if (map == 'C')
+		imgptr = map_values->imgptr.collectible;
+	else if (map == 'E' && map_values->collectibles != 0)
+		imgptr = map_values->imgptr.exit;
+	else if (map == 'E' && map_values->collectibles == 0)
+		imgptr = map_values->imgptr.exit_open;
+	else if (map == '0')
+		imgptr = map_values->imgptr.floor;
+	else if (map == '1')
+		imgptr = map_values->imgptr.wall;
+	else if (map == 'X')
+		imgptr = map_values->imgptr.enemy[map_values->current_frame];
+	mlx_put_image_to_window(map_values->init, map_values->window,
+		imgptr, y * width, (x + 1) * height);
+	return (imgptr);
+}
 
 void	free_images(t_map *map_values)
 {

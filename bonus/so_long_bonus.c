@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 23:29:55 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 23:45:15 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,21 @@ static int	close_window(t_map *map_value)
 	return (free_all(map_value), exit(0), 0);
 }
 
+static int	is_enemy_blocking(t_map *map_values, int x, int y, int current)
+{
+	int	i;
+
+	i = 0;
+	while (i < map_values->enemy_count)
+	{
+		if (i != current && map_values->enemies[i].x == x
+			&& map_values->enemies[i].y == y)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	move_enemies(t_map *map_values)
 {
 	int	i;
@@ -46,44 +61,16 @@ void	move_enemies(t_map *map_values)
 		y = map_values->enemies[i].y;
 		n_y = y + map_values->enemies[i].direction;
 		if (map_values->map[x][n_y] == '1'
-			|| map_values->map[x][n_y] == 'E' || map_values->map[x][n_y] == 'X')
+			|| map_values->map[x][n_y] == 'E'
+			|| is_enemy_blocking(map_values, x, n_y, i))
 			map_values->enemies[i].direction *= -1;
 		else
 		{
 			if (map_values->map[x][n_y] == 'P')
 				exit_message(map_values, 0);
-			if (map_values->map[x][y] != 'C')
-				map_values->map[x][y] = '0';
 			map_values->enemies[i].y = n_y;
-			if (map_values->map[x][n_y] != 'C')
-				map_values->map[x][n_y] = 'X';
 		}
 	}
-}
-
-int	enemy_movement(t_map *map_values)
-{
-	static int	counter;
-	static int	move_counter;
-
-	counter++;
-	if (counter >= 200)
-	{
-		map_values->current_frame++;
-		if (map_values->current_frame >= 5)
-			map_values->current_frame = 0;
-		counter = 0;
-	}
-	move_counter++;
-	if (move_counter >= 200)
-	{
-		if (!map_values->enemies || map_values->enemy_count == 0)
-			return (0);
-		move_enemies(map_values);
-		move_counter = 0;
-	}
-	redraw_window(map_values);
-	return (0);
 }
 
 void	*so_long(char **map, t_map *map_values)

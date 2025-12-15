@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:55:29 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 18:31:32 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 23:42:32 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	map_check_bonus(char **map, t_map *maps, int x, int y)
 			maps->enemies[maps->enemy_count].x = x;
 			maps->enemies[maps->enemy_count].y = y;
 			maps->enemies[maps->enemy_count].direction = 1;
+			map[x][y] = '0';
 		}
 		maps->enemy_count++;
 	}

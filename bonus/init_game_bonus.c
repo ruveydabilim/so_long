@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:51:40 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 15:51:27 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 23:35:16 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	init_maps(t_map *maps)
 	maps->enemies = NULL;
 	maps->window = NULL;
 	maps->init = NULL;
+	gettimeofday(&maps->last_frame_time, NULL);
+	gettimeofday(&maps->last_move_time, NULL);
 }
 
 void	xpm_control(t_map *map_values)
