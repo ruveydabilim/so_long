@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 19:46:46 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 10:55:36 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ typedef struct s_img
 	void	*wall;
 	void	*exit_open;
 	void	*enemy[5];
+	void	*digits[10];
+	void	*movecount_bg;
+	void	*firstline;
 }	t_img;
 
 typedef struct s_map
@@ -75,5 +78,6 @@ void	exit_message(t_map *map_values, int is_won);
 void	xpm_control(t_map *map_values);
 int		enemy_movement(t_map *map_values);
 void	move_enemies(t_map *map_values);
+void	display_move_count(t_map *map_values);
 
 #endif

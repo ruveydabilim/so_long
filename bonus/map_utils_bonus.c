@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:20 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 23:58:20 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 10:55:37 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	*control_map(t_map *map_values, char map, int x, int y)
 	else if (map == 'X')
 		imgptr = map_values->imgptr.enemy[map_values->current_frame];
 	mlx_put_image_to_window(map_values->init, map_values->window,
-		imgptr, y * width, x * height);
+		imgptr, y * width, (x + 1) * height);
 	return (imgptr);
 }
 
@@ -82,5 +82,44 @@ int	redraw_window(t_map *map_values)
 		}
 		x++;
 	}
+	display_move_count(map_values);
 	return (0);
+}
+
+void	display_move_count(t_map *map_values)
+{
+	int		digits[10];
+	int		count;
+	int		i;
+	int		x_pos;
+
+	count = map_values->move_count;
+	i = 0;
+	x_pos = 0;
+	while (x_pos < map_values->map_width * 64)
+	{
+		mlx_put_image_to_window(map_values->init, map_values->window,
+			map_values->imgptr.firstline, x_pos, 0);
+		x_pos += 64;
+	}
+	if (count == 0)
+		digits[i++] = 0;
+	else
+	{
+		while (count > 0 && i < 10)
+		{
+			digits[i++] = count % 10;
+			count /= 10;
+		}
+	}
+	x_pos = 0;
+	mlx_put_image_to_window(map_values->init, map_values->window,
+		map_values->imgptr.movecount_bg, x_pos, 0);
+	x_pos += 128;
+	while (--i >= 0)
+	{
+		mlx_put_image_to_window(map_values->init, map_values->window,
+			map_values->imgptr.digits[digits[i]], x_pos, 0);
+		x_pos += 16;
+	}
 }

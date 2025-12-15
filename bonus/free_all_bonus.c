@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:51:39 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 23:59:42 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 10:55:37 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,22 @@ void	free_images(t_map *map_values)
 		mlx_destroy_image(map_values->init, map_values->imgptr.wall);
 	if (map_values->imgptr.exit_open)
 		mlx_destroy_image(map_values->init, map_values->imgptr.exit_open);
+	if (map_values->imgptr.movecount_bg)
+		mlx_destroy_image(map_values->init, map_values->imgptr.movecount_bg);
+	if (map_values->imgptr.firstline)
+		mlx_destroy_image(map_values->init, map_values->imgptr.firstline);
 	i = 0;
 	while (i < 5)
 	{
 		if (map_values->imgptr.enemy[i])
 			mlx_destroy_image(map_values->init, map_values->imgptr.enemy[i]);
+		i++;
+	}
+	i = 0;
+	while (i < 10)
+	{
+		if (map_values->imgptr.digits[i])
+			mlx_destroy_image(map_values->init, map_values->imgptr.digits[i]);
 		i++;
 	}
 }

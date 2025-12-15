@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:51:40 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 21:14:47 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 11:26:10 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,68 @@ void	init_maps(t_map *maps)
 
 void	xpm_control(t_map *map_values)
 {
-	if (!map_values->imgptr.exit_open)
+	int	i;
+
+	if (!map_values->imgptr.exit_open || !map_values->imgptr.wall
+		|| !map_values->imgptr.floor || !map_values->imgptr.exit
+		|| !map_values->imgptr.collectible || !map_values->imgptr.player
+		|| !map_values->imgptr.movecount_bg || !map_values->imgptr.firstline)
 		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.wall)
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.floor)
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.exit)
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.collectible)
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.player)
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.enemy[0])
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.enemy[1])
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.enemy[2])
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.enemy[3])
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else if (!map_values->imgptr.enemy[4])
-		(free_all(map_values), exit(EXIT_FAILURE));
-	else
-		return ;
+	i = 0;
+	while (i < 5)
+	{
+		if (!map_values->imgptr.enemy[i])
+			(free_all(map_values), exit(EXIT_FAILURE));
+		i++;
+	}
+	i = 0;
+	while (i < 10)
+	{
+		if (!map_values->imgptr.digits[i])
+			(free_all(map_values), exit(EXIT_FAILURE));
+		i++;
+	}
+}
+
+static void	init_images2(t_map *map_values, int width, int height, int i)
+{
+	char	*base = "./textures/0.xpm";
+	char	path[20];
+	int		j;
+
+	width = 64;
+	height = 64;
+	map_values->imgptr.firstline = mlx_xpm_file_to_image(map_values->init,
+			"./textures/firstline.xpm", &width, &height);
+	width = 128;
+	height = 64;
+	map_values->imgptr.movecount_bg = mlx_xpm_file_to_image(map_values->init,
+			"./textures/movecount.xpm", &width, &height);
+	i = -1;
+	while (++i < 10)
+	{
+
+
+		width = 16;
+		height = 32;
+		j = 0;
+		while (base[j])
+		{
+			path[j] = base[j];
+			j++;
+		}
+		path[11] = '0' + i;
+		path[j] = '\0';
+		map_values->imgptr.digits[i] = mlx_xpm_file_to_image(map_values->init,
+				path, &width, &height);
+	}
 }
 
 static void	init_images(t_map *map_values)
 {
 	int		width;
 	int		height;
+	int		i;
 
 	width = 64;
 	height = 64;
@@ -86,6 +118,7 @@ static void	init_images(t_map *map_values)
 			ENEMYS4, &width, &height);
 	map_values->imgptr.enemy[4] = mlx_xpm_file_to_image(map_values->init,
 			ENEMYS5, &width, &height);
+	init_images2(map_values, width, height, i);
 	xpm_control(map_values);
 }
 
@@ -107,4 +140,5 @@ void	init_window(t_map *map_values, char **map)
 		}
 		x++;
 	}
+	display_move_count(map_values);
 }
