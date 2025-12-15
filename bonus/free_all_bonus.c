@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:51:39 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 10:55:37 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 16:36:16 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,10 @@ void	exit_message(t_map *map_values, int is_won)
 	exit(0);
 }
 
-void	free_images(t_map *map_values)
+void	free_bonusimages(t_map *map_values)
 {
 	int	i;
 
-	if (!map_values->init)
-		return ;
-	if (map_values->imgptr.player)
-		mlx_destroy_image(map_values->init, map_values->imgptr.player);
-	if (map_values->imgptr.collectible)
-		mlx_destroy_image(map_values->init, map_values->imgptr.collectible);
-	if (map_values->imgptr.exit)
-		mlx_destroy_image(map_values->init, map_values->imgptr.exit);
-	if (map_values->imgptr.floor)
-		mlx_destroy_image(map_values->init, map_values->imgptr.floor);
-	if (map_values->imgptr.wall)
-		mlx_destroy_image(map_values->init, map_values->imgptr.wall);
-	if (map_values->imgptr.exit_open)
-		mlx_destroy_image(map_values->init, map_values->imgptr.exit_open);
-	if (map_values->imgptr.movecount_bg)
-		mlx_destroy_image(map_values->init, map_values->imgptr.movecount_bg);
-	if (map_values->imgptr.firstline)
-		mlx_destroy_image(map_values->init, map_values->imgptr.firstline);
 	i = 0;
 	while (i < 5)
 	{
@@ -88,10 +70,12 @@ void	free_all(t_map *map_values)
 		return ;
 	if (map_values->init)
 	{
+		free_bonusimages(map_values);
 		free_images(map_values);
 		if (map_values->window)
 			mlx_destroy_window(map_values->init, map_values->window);
 		mlx_destroy_display(map_values->init);
+		free(map_values->init);
 	}
 	if (map_values->map)
 		free_doublepoint((void **)map_values->map);
@@ -99,6 +83,5 @@ void	free_all(t_map *map_values)
 		free(map_values->collectible);
 	if (map_values->enemies)
 		free(map_values->enemies);
-	free(map_values->init);
 	free(map_values);
 }

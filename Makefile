@@ -4,7 +4,7 @@ CFLAGS = -g -Wall -Wextra -Werror
 SRC = main.c map_parser.c map_validation.c so_long.c map_utils.c free_all.c \
 	key_utils.c init_game.c
 BONUSRC = main_bonus.c map_parser_bonus.c map_validation_bonus.c so_long_bonus.c \
-	map_utils_bonus.c free_all_bonus.c key_utils_bonus.c init_game_bonus.c
+	map_utils_bonus.c free_all_bonus.c key_utils_bonus.c init_game_bonus.c image_utils_bonus.c map_valid2_bonus.c
 GNL = ./external/get_next_line/get_next_line.c ./external/get_next_line/get_next_line_utils.c
 SRCS = $(addprefix srcs/, $(SRC))
 BONUSRCS = $(addprefix bonus/, $(BONUSRC))

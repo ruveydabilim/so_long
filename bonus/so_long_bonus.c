@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 10:17:59 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 19:03:44 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,17 @@ void	move_enemies(t_map *map_values)
 	int	x;
 	int	y;
 	int	n_y;
+	
 
 	if (!map_values->enemies || map_values->enemy_count == 0)
 		return ;
-	i = 0;
-	while (i < map_values->enemy_count)
+	i = -1;
+	while (++i < map_values->enemy_count)
 	{
 		x = map_values->enemies[i].x;
 		y = map_values->enemies[i].y;
 		n_y = y + map_values->enemies[i].direction;
-		if (map_values->map[x][n_y] == '1' || map_values->map[x][n_y] == 'C'
+		if (map_values->map[x][n_y] == '1'
 			|| map_values->map[x][n_y] == 'E' || map_values->map[x][n_y] == 'X')
 			map_values->enemies[i].direction *= -1;
 		else
@@ -56,9 +57,9 @@ void	move_enemies(t_map *map_values)
 				exit_message(map_values, 0);
 			map_values->map[x][y] = '0';
 			map_values->enemies[i].y = n_y;
+			
 			map_values->map[x][n_y] = 'X';
 		}
-		i++;
 	}
 }
 
@@ -68,7 +69,7 @@ int	enemy_movement(t_map *map_values)
 	static int	move_counter;
 
 	counter++;
-	if (counter >= 250)
+	if (counter >= 200)
 	{
 		map_values->current_frame++;
 		if (map_values->current_frame >= 5)
@@ -76,7 +77,7 @@ int	enemy_movement(t_map *map_values)
 		counter = 0;
 	}
 	move_counter++;
-	if (move_counter >= 500)
+	if (move_counter >= 200)
 	{
 		move_enemies(map_values);
 		move_counter = 0;
@@ -96,8 +97,8 @@ void	*so_long(char **map, t_map *map_values)
 	if (!init)
 		return (NULL);
 	mlx_get_screen_size(init, &x, &y);
-	if ((map_values->map_height + 1) * 64 > y
-		|| map_values->map_width * 64 > x)
+	if ((map_values->map_height + 2) * 64 > y
+		|| (map_values->map_width) * 64 > x)
 		return (mlx_destroy_display(init), free(init),
 			freemsg(NULL, NULL, BIGMAPERROR), NULL);
 	window = mlx_new_window(init, map_values->map_width * 64,

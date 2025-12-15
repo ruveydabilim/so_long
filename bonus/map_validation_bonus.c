@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 23:56:48 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 18:40:19 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,6 @@ static	void	floodfill(char **map, int x, int y)
 	floodfill(map, x, y - 1);
 }
 
-static int	wall_check(char **map)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (map[0][i] && map[0][i] != '\n')
-		if (map[0][i++] != '1')
-			return (0);
-	i = 0;
-	while (map[i])
-		i++;
-	while (map[i - 1][j] && map[i - 1][j] != '\n')
-		if (map[i - 1][j++] != '1')
-			return (0);
-	i = 1;
-	if (j == 0)
-		j = 1;
-	while (map[i])
-		if (map[i][0] != '1' || map[i++][j - 1] != '1')
-			return (0);
-	return (1);
-}
-
 static int	map_check(char **map, t_map *maps, int x, int y)
 {
 	if (map[x][y] == 'P')
@@ -65,36 +40,23 @@ static int	map_check(char **map, t_map *maps, int x, int y)
 		maps->exit.count++;
 	}
 	else if (map[x][y] == 'C')
-	{
-		if (maps->collectible)
-		{
-			maps->collectible[maps->collectibles].x = x;
-			maps->collectible[maps->collectibles].y = y;
-		}
-		maps->collectibles++;
-	}
+		map_check_bonus(map, maps, x, y);
 	else if (map[x][y] == 'X')
-	{
-		if (maps->enemies)
-		{
-			maps->enemies[maps->enemy_count].x = x;
-			maps->enemies[maps->enemy_count].y = y;
-			maps->enemies[maps->enemy_count].direction = 1;
-		}
-		maps->enemy_count++;
-	}
+		map_check_bonus(map, maps, x, y);
 	else if (map[x][y] != '0' && map[x][y] != '1' && map[x][y] != '\n')
 		return (1);
 	return (0);
 }
 
-static t_map	*map_chars(char **map, t_map *maps, int x, int y, int do_init)
+t_map	*map_chars(char **map, t_map *maps)
 {
 	int		temp;
+	int		x;
+	int		y;
 
+	x = 0;
+	y = 0;
 	temp = 0;
-	if (do_init)
-		init_maps(maps);
 	while (map[x])
 	{
 		if (y != temp && temp != 0)
@@ -118,22 +80,8 @@ static t_map	*map_chars(char **map, t_map *maps, int x, int y, int do_init)
 t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 {
 	t_map	*maps;
-	int		x;
-	int		y;
 
-	x = 0;
-	y = 0;
-	maps = ft_calloc(sizeof(t_map), 1);
-	if (!maps || !cpymaps)
-		return (NULL);
-	if (!map_chars(map, maps, x, y, 1))
-		return (freemsg(maps, cpymaps, INVCHAR),
-			NULL);
-	if (!wall_check(map))
-		return (freemsg(maps, cpymaps, NOTRECTERROR), NULL);
-	if (maps->exit.count != 1 || maps->player.count != 1
-		|| maps->collectibles < 1)
-		return (freemsg(maps, cpymaps, WRONGCHARCOUNT), NULL);
+	maps = map_valid(map, cpymaps);
 	maps->collectible = ft_calloc(sizeof(t_mchar), (maps->collectibles + 1));
 	if (!maps->collectible)
 		return (free(cpymaps), free(maps), NULL);
@@ -145,9 +93,9 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 	}
 	maps->collectibles = 0;
 	maps->enemy_count = 0;
-	map_chars(map, maps, x, y, 0);
+	map_chars(map, maps);
 	floodfill(copymap, maps->player.x, maps->player.y);
-	map_chars(copymap, cpymaps, x, y, 1);
+	map_chars(copymap, cpymaps);
 	if (cpymaps->exit.count != 0 || cpymaps->collectibles != 0)
 		return (freemsg(maps, cpymaps, NOTPLAYABLE), NULL);
 	maps->map = map;

@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 18:55:37 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 17:58:33 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,6 @@ void	press_key(t_map *map_values, int key)
 		move_down(map_values);
 	else
 		return ;
+	display_move_count(map_values);
 	redraw_window(map_values);
 }

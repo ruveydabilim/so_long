@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:20 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 10:55:37 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 17:58:08 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	redraw_window(t_map *map_values)
 
 	x = 0;
 	y = 0;
-	mlx_clear_window(map_values->init, map_values->window);
 	while (map_values->map[x])
 	{
 		y = 0;
@@ -82,7 +81,6 @@ int	redraw_window(t_map *map_values)
 		}
 		x++;
 	}
-	display_move_count(map_values);
 	return (0);
 }
 

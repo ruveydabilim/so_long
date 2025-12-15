@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 10:55:36 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 17:50:52 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,10 @@ void	xpm_control(t_map *map_values);
 int		enemy_movement(t_map *map_values);
 void	move_enemies(t_map *map_values);
 void	display_move_count(t_map *map_values);
+void	init_images(t_map *map_values);
+void	free_bonusimages(t_map *map_values);
+int		map_check_bonus(char **map, t_map *maps, int x, int y);
+void	*map_valid(char **map, t_map *cpymaps);
+t_map	*map_chars(char **map, t_map *maps);
 
 #endif
