@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:47:20 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 17:58:08 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 23:29:04 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,11 @@ int	redraw_window(t_map *map_values)
 	return (0);
 }
 
-void	display_move_count(t_map *map_values)
+static int	count_to_digits(int count, int *digits)
 {
-	int		digits[10];
-	int		count;
-	int		i;
-	int		x_pos;
+	int	i;
 
-	count = map_values->move_count;
 	i = 0;
-	x_pos = 0;
-	while (x_pos < map_values->map_width * 64)
-	{
-		mlx_put_image_to_window(map_values->init, map_values->window,
-			map_values->imgptr.firstline, x_pos, 0);
-		x_pos += 64;
-	}
 	if (count == 0)
 		digits[i++] = 0;
 	else
@@ -110,6 +99,23 @@ void	display_move_count(t_map *map_values)
 			count /= 10;
 		}
 	}
+	return (i);
+}
+
+void	display_move_count(t_map *map_values)
+{
+	int		digits[10];
+	int		i;
+	int		x_pos;
+
+	x_pos = 0;
+	while (x_pos < map_values->map_width * 64)
+	{
+		mlx_put_image_to_window(map_values->init, map_values->window,
+			map_values->imgptr.firstline, x_pos, 0);
+		x_pos += 64;
+	}
+	i = count_to_digits(map_values->move_count, digits);
 	x_pos = 0;
 	mlx_put_image_to_window(map_values->init, map_values->window,
 		map_values->imgptr.movecount_bg, x_pos, 0);

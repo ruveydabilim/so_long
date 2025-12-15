@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:08:08 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 19:03:44 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/15 23:29:55 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ void	move_enemies(t_map *map_values)
 	int	x;
 	int	y;
 	int	n_y;
-	
 
-	if (!map_values->enemies || map_values->enemy_count == 0)
-		return ;
 	i = -1;
 	while (++i < map_values->enemy_count)
 	{
@@ -55,10 +52,11 @@ void	move_enemies(t_map *map_values)
 		{
 			if (map_values->map[x][n_y] == 'P')
 				exit_message(map_values, 0);
-			map_values->map[x][y] = '0';
+			if (map_values->map[x][y] != 'C')
+				map_values->map[x][y] = '0';
 			map_values->enemies[i].y = n_y;
-			
-			map_values->map[x][n_y] = 'X';
+			if (map_values->map[x][n_y] != 'C')
+				map_values->map[x][n_y] = 'X';
 		}
 	}
 }
@@ -79,6 +77,8 @@ int	enemy_movement(t_map *map_values)
 	move_counter++;
 	if (move_counter >= 200)
 	{
+		if (!map_values->enemies || map_values->enemy_count == 0)
+			return (0);
 		move_enemies(map_values);
 		move_counter = 0;
 	}
