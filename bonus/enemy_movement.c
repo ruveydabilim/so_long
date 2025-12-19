@@ -6,11 +6,25 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 23:44:12 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 23:46:53 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 12:31:40 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long_bonus.h"
+
+int	is_enemy_at_position(t_map *map_values, int x, int y)
+{
+	int	i;
+
+	i = 0;
+	while (i < map_values->enemy_count)
+	{
+		if (map_values->enemies[i].x == x && map_values->enemies[i].y == y)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 static long	get_time_elapsed(struct timeval start, struct timeval current)
 {

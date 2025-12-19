@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 19:23:27 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 22:18:24 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 14:12:12 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@
 # define INVARGCOUNT "Error\nInvalid argument count.\n"
 # define INVARGTYPE "Error\nInvalid argument type.\n"
 # define INVFILE "Error\nEmpty or invalid file.\n"
-
+# define TXTER "Error\nCheck textures."
 #endif

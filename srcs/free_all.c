@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:51:39 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 19:54:18 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 14:06:36 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	freemsg(void *free1, void *free2, char *message)
 	if (free2)
 		free(free2);
 	if (message)
-		ft_printf("%s\n", message);
+		ft_putendl_fd(message, 2);
 }
 
 void	exit_message(t_map *map_values)
@@ -45,8 +45,8 @@ void	free_images(t_map *map_values)
 {
 	if (!map_values->init)
 		return ;
-	if (map_values->imgptr.player)
-		mlx_destroy_image(map_values->init, map_values->imgptr.player);
+	if (map_values->imgptr.player_default)
+		mlx_destroy_image(map_values->init, map_values->imgptr.player_default);
 	if (map_values->imgptr.collectible)
 		mlx_destroy_image(map_values->init, map_values->imgptr.collectible);
 	if (map_values->imgptr.exit)
@@ -57,6 +57,12 @@ void	free_images(t_map *map_values)
 		mlx_destroy_image(map_values->init, map_values->imgptr.wall);
 	if (map_values->imgptr.exit_open)
 		mlx_destroy_image(map_values->init, map_values->imgptr.exit_open);
+	if (map_values->imgptr.move_up)
+		mlx_destroy_image(map_values->init, map_values->imgptr.move_up);
+	if (map_values->imgptr.move_left)
+		mlx_destroy_image(map_values->init, map_values->imgptr.move_left);
+	if (map_values->imgptr.move_down)
+		mlx_destroy_image(map_values->init, map_values->imgptr.move_down);
 }
 
 void	free_all(t_map *map_values)

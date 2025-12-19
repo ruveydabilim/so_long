@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 18:40:19 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 13:11:00 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ t_map	*map_chars(char **map, t_map *maps)
 	while (map[x])
 	{
 		if (y != temp && temp != 0)
-			return (0);
+			return (ft_putendl_fd(NOTRECTERROR, 2), NULL);
 		y = 0;
 		while (map[x][y] && map[x][y] != '\n')
 		{
 			if (map_check(map, maps, x, y))
-				return (0);
+				return (ft_putendl_fd(INVCHAR, 2), NULL);
 			y++;
 			if (x == 0)
 				temp = y;

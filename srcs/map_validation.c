@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 19:48:52 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 13:38:18 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static int	wall_check(char **map)
 
 	j = 0;
 	i = 0;
+	if (map[0][0] == '\0' || map[0][0] == '\n')
+		return (0);
 	while (map[0][i] && map[0][i] != '\n')
 		if (map[0][i++] != '1')
 			return (0);
@@ -87,12 +89,12 @@ static t_map	*map_chars(char **map, t_map *maps, int x, int y)
 	while (map[x])
 	{
 		if (y != temp && temp != 0)
-			return (0);
+			return (ft_putendl_fd(NOTRECTERROR, 2), NULL);
 		y = 0;
 		while (map[x][y] && map[x][y] != '\n')
 		{
 			if (map_check(map, maps, x, y))
-				return (0);
+				return (ft_putendl_fd(INVCHAR, 2), NULL);
 			y++;
 			if (x == 0)
 				temp = y;
@@ -116,7 +118,7 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 	if (!maps || !cpymaps)
 		return (NULL);
 	if (!map_chars(map, maps, x, y))
-		return (freemsg(maps, cpymaps, INVCHAR), NULL);
+		return (freemsg(maps, cpymaps, NULL), NULL);
 	if (!wall_check(map))
 		return (freemsg(maps, cpymaps, NOTRECTERROR), NULL);
 	if (maps->exit.count != 1 || maps->player.count != 1

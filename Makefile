@@ -1,6 +1,7 @@
 NAME = so_long
+NAME_BONUS = so_long_bonus
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror 
 SRC = main.c map_parser.c map_validation.c so_long.c map_utils.c free_all.c \
 	key_utils.c init_game.c
 BONUSRC = main_bonus.c map_parser_bonus.c map_validation_bonus.c so_long_bonus.c \
@@ -22,18 +23,20 @@ INCLUDES = $(LIBFT) $(PRINTF) $(MLX)
 
 all: $(NAME)
 
-bonus: $(MLX) $(BONUSOBJS) $(LIBFT) $(PRINTF)
-	@$(CC) $(CFLAGS) $(BONUSOBJS) $(GNL) -o $(NAME) $(INCLUDES) $(MLX_FLAG) 
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(MLX) $(BONUSOBJS) $(LIBFT) $(PRINTF)
+	$(CC) $(CFLAGS) $(BONUSOBJS) $(GNL) -o $(NAME_BONUS) $(INCLUDES) $(MLX_FLAG) 
 
 $(NAME): $(MLX) $(OBJS) $(LIBFT) $(PRINTF)
-	@$(CC) $(CFLAGS) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES) $(MLX_FLAG)
+	$(CC) $(CFLAGS) $(OBJS) $(GNL) -o $(NAME) $(INCLUDES) $(MLX_FLAG)
 $(LIBFT):
-	make -s -C $(LIBFT_DIR)
+	@make -s -C $(LIBFT_DIR)
 $(PRINTF):
-	make -s -C $(PRINTF_DIR)
+	@make -s -C $(PRINTF_DIR)
 
 $(MLX): mlx_install
-	make -s -C $(MLX_DIR)
+	@make -s -C $(MLX_DIR)
 
 mlx_install:
 	@if [ ! -d "$(MLX_DIR)" ]; then \
@@ -41,15 +44,15 @@ mlx_install:
 		mv mlx ./external/; fi
 clean:
 	@rm -f $(OBJS) $(BONUSOBJS)
-	make -s clean -C $(LIBFT_DIR)
-	make -s clean -C $(PRINTF_DIR)
-	make -s clean -C $(MLX_DIR)
+	@make -s clean -C $(LIBFT_DIR)
+	@make -s clean -C $(PRINTF_DIR)
+	@make -s clean -C $(MLX_DIR)
 
 fclean: clean
-	@rm -rf $(NAME)
-	make -s fclean -C $(LIBFT_DIR)
-	make -s fclean -C $(PRINTF_DIR)
-	rm -rf $(MLX_DIR)
+	@rm -rf $(NAME) $(NAME_BONUS)
+	@make -s fclean -C $(LIBFT_DIR)
+	@make -s fclean -C $(PRINTF_DIR)
+	@rm -rf $(MLX_DIR)
 
 re: fclean all
 

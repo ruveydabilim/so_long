@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:51:40 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 19:53:53 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 14:06:35 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,25 @@ void	init_maps(t_map *maps)
 void	xpm_control(t_map *map_values)
 {
 	if (!map_values->imgptr.exit_open)
-		(free_all(map_values), exit(EXIT_FAILURE));
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
 	else if (!map_values->imgptr.wall)
-		(free_all(map_values), exit(EXIT_FAILURE));
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
 	else if (!map_values->imgptr.floor)
-		(free_all(map_values), exit(EXIT_FAILURE));
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
 	else if (!map_values->imgptr.exit)
-		(free_all(map_values), exit(EXIT_FAILURE));
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
 	else if (!map_values->imgptr.collectible)
-		(free_all(map_values), exit(EXIT_FAILURE));
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
 	else if (!map_values->imgptr.player)
-		(free_all(map_values), exit(EXIT_FAILURE));
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
+	else if (!map_values->imgptr.player_default)
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
+	else if (!map_values->imgptr.move_up)
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
+	else if (!map_values->imgptr.move_left)
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
+	else if (!map_values->imgptr.move_down)
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
 	else
 		return ;
 }
@@ -51,8 +59,9 @@ static void	init_images(t_map *map_values)
 
 	width = 64;
 	height = 64;
-	map_values->imgptr.player = mlx_xpm_file_to_image(map_values->init,
+	map_values->imgptr.player_default = mlx_xpm_file_to_image(map_values->init,
 			PLAYER, &width, &height);
+	map_values->imgptr.player = map_values->imgptr.player_default;
 	map_values->imgptr.collectible = mlx_xpm_file_to_image(map_values->init,
 			COLL, &width, &height);
 	map_values->imgptr.exit = mlx_xpm_file_to_image(map_values->init,
@@ -63,6 +72,12 @@ static void	init_images(t_map *map_values)
 			WALL, &width, &height);
 	map_values->imgptr.exit_open = mlx_xpm_file_to_image(map_values->init,
 			EXIT_OPEN, &width, &height);
+	map_values->imgptr.move_up = mlx_xpm_file_to_image(map_values->init,
+			MOVE_UP, &width, &height);
+	map_values->imgptr.move_left = mlx_xpm_file_to_image(map_values->init,
+			MOVE_LEFT, &width, &height);
+	map_values->imgptr.move_down = mlx_xpm_file_to_image(map_values->init,
+			MOVE_DOWN, &width, &height);
 	xpm_control(map_values);
 }
 

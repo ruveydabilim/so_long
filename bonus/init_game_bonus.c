@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:51:40 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 23:35:16 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 13:48:32 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ void	xpm_control(t_map *map_values)
 		|| !map_values->imgptr.floor || !map_values->imgptr.exit
 		|| !map_values->imgptr.collectible || !map_values->imgptr.player
 		|| !map_values->imgptr.movecount_bg || !map_values->imgptr.firstline)
-		(free_all(map_values), exit(EXIT_FAILURE));
+		(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
 	i = 0;
 	while (i < 5)
 	{
 		if (!map_values->imgptr.enemy[i])
-			(free_all(map_values), exit(EXIT_FAILURE));
+			(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
 		i++;
 	}
 	i = 0;
 	while (i < 10)
 	{
 		if (!map_values->imgptr.digits[i])
-			(free_all(map_values), exit(EXIT_FAILURE));
+			(ft_putendl_fd(TXTER, 2), free_all(map_values), exit(EXIT_FAILURE));
 		i++;
 	}
 }

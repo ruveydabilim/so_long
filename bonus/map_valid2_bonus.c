@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:55:29 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 23:42:32 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 13:38:32 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static int	wall_check(char **map)
 
 	j = 0;
 	i = 0;
+	if (map[0][0] == '\0' || map[0][0] == '\n')
+		return (0);
 	while (map[0][i] && map[0][i] != '\n')
 		if (map[0][i++] != '1')
 			return (0);
@@ -73,7 +75,7 @@ void	*map_valid(char **map, t_map *cpymaps)
 		return (NULL);
 	init_maps(maps);
 	if (!map_chars(map, maps))
-		return (freemsg(maps, cpymaps, INVCHAR), NULL);
+		return (freemsg(maps, cpymaps, ""), NULL);
 	if (!wall_check(map))
 		return (freemsg(maps, cpymaps, NOTRECTERROR), NULL);
 	if (maps->exit.count != 1 || maps->player.count != 1

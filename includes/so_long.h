@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/14 19:47:07 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 14:06:38 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ typedef struct s_mchar
 typedef struct s_img
 {
 	void	*player;
+	void	*player_default;
 	void	*collectible;
 	void	*exit;
 	void	*floor;
 	void	*wall;
 	void	*exit_open;
+	void	*move_up;
+	void	*move_left;
+	void	*move_down;
 }	t_img;
 
 typedef struct s_map

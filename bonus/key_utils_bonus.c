@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:49:22 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 17:58:33 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 12:47:11 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static void	move_up(t_map *map_values)
 	map = map_values->map;
 	if (map[map_values->player.x - 1][map_values->player.y] != '1')
 	{
-		if (map[map_values->player.x - 1][map_values->player.y] == 'X')
+		if (is_enemy_at_position(map_values, map_values->player.x - 1,
+				map_values->player.y))
 			exit_message(map_values, 0);
 		if (map[map_values->player.x - 1][map_values->player.y] == 'C')
 			map_values->collectibles--;
@@ -46,7 +47,8 @@ static void	move_down(t_map *map_values)
 	map = map_values->map;
 	if (map[map_values->player.x + 1][map_values->player.y] != '1')
 	{
-		if (map[map_values->player.x + 1][map_values->player.y] == 'X')
+		if (is_enemy_at_position(map_values, map_values->player.x + 1,
+				map_values->player.y))
 			exit_message(map_values, 0);
 		if (map[map_values->player.x + 1][map_values->player.y] == 'C')
 			map_values->collectibles--;
@@ -73,7 +75,8 @@ static void	move_left(t_map *map_values)
 	map = map_values->map;
 	if (map[map_values->player.x][map_values->player.y - 1] != '1')
 	{
-		if (map[map_values->player.x][map_values->player.y - 1] == 'X')
+		if (is_enemy_at_position(map_values, map_values->player.x,
+				map_values->player.y - 1))
 			exit_message(map_values, 0);
 		if (map[map_values->player.x][map_values->player.y - 1] == 'C')
 			map_values->collectibles--;
@@ -100,7 +103,8 @@ static void	move_right(t_map *map_values)
 	map = map_values->map;
 	if (map[map_values->player.x][map_values->player.y + 1] != '1')
 	{
-		if (map[map_values->player.x][map_values->player.y + 1] == 'X')
+		if (is_enemy_at_position(map_values, map_values->player.x,
+				map_values->player.y + 1))
 			exit_message(map_values, 0);
 		if (map[map_values->player.x][map_values->player.y + 1] == 'C')
 			map_values->collectibles--;

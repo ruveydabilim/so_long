@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:46:32 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 23:35:12 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 12:32:02 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ void	free_bonusimages(t_map *map_values);
 int		map_check_bonus(char **map, t_map *maps, int x, int y);
 void	*map_valid(char **map, t_map *cpymaps);
 t_map	*map_chars(char **map, t_map *maps);
+int		is_enemy_at_position(t_map *map_values, int x, int y);
 
 #endif

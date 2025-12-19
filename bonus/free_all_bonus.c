@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:51:39 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/15 16:36:16 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 13:08:25 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	freemsg(void *free1, void *free2, char *message)
 	if (free2)
 		free(free2);
 	if (message)
-		ft_printf("%s\n", message);
+		ft_putendl_fd(message, 2);
 }
 
 void	exit_message(t_map *map_values, int is_won)
