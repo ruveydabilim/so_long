@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/19 13:38:18 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 18:42:17 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,6 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 	if (maps->exit.count != 1 || maps->player.count != 1
 		|| maps->collectibles < 1)
 		return (freemsg(maps, cpymaps, WRONGCHARCOUNT), NULL);
-	maps->collectible = ft_calloc(sizeof(t_mchar), (maps->collectibles + 1));
-	if (!maps->collectible)
-		return (free(cpymaps), free(maps), NULL);
 	floodfill(copymap, maps->player.x, maps->player.y);
 	map_chars(copymap, cpymaps, x, y);
 	if (cpymaps->exit.count != 0 || cpymaps->collectibles != 0)
