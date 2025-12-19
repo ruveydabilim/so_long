@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:55:29 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/19 13:38:32 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/19 18:57:17 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	*map_valid(char **map, t_map *cpymaps)
 		return (NULL);
 	init_maps(maps);
 	if (!map_chars(map, maps))
-		return (freemsg(maps, cpymaps, ""), NULL);
+		return (freemsg(maps, cpymaps, NULL), NULL);
 	if (!wall_check(map))
 		return (freemsg(maps, cpymaps, NOTRECTERROR), NULL);
 	if (maps->exit.count != 1 || maps->player.count != 1
