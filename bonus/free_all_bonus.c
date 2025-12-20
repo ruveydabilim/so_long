@@ -6,13 +6,13 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:51:39 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/19 13:08:25 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/20 10:15:43 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long_bonus.h"
 
-void	free_doublepoint(void **ptr)
+void	free_doubleptr(char **ptr)
 {
 	int	i;
 
@@ -78,7 +78,7 @@ void	free_all(t_map *map_values)
 		free(map_values->init);
 	}
 	if (map_values->map)
-		free_doublepoint((void **)map_values->map);
+		free_doubleptr(map_values->map);
 	if (map_values->collectible)
 		free(map_values->collectible);
 	if (map_values->enemies)

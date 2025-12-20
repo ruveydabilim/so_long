@@ -6,7 +6,7 @@
 /*   By: rbilim <rbilim@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 15:10:06 by rbilim            #+#    #+#             */
-/*   Updated: 2025/12/19 18:42:17 by rbilim           ###   ########.fr       */
+/*   Updated: 2025/12/20 10:12:30 by rbilim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,16 +118,19 @@ t_map	*map_validation(char **map, char **copymap, t_map *cpymaps)
 	if (!maps || !cpymaps)
 		return (NULL);
 	if (!map_chars(map, maps, x, y))
-		return (freemsg(maps, cpymaps, NULL), NULL);
+		return (free_doubleptr(map), freemsg(maps, cpymaps, NULL), NULL);
 	if (!wall_check(map))
-		return (freemsg(maps, cpymaps, NOTRECTERROR), NULL);
+		return (free_doubleptr(map),
+			freemsg(maps, cpymaps, NOTRECTERROR), NULL);
 	if (maps->exit.count != 1 || maps->player.count != 1
 		|| maps->collectibles < 1)
-		return (freemsg(maps, cpymaps, WRONGCHARCOUNT), NULL);
+		return (free_doubleptr(map),
+			freemsg(maps, cpymaps, WRONGCHARCOUNT), NULL);
 	floodfill(copymap, maps->player.x, maps->player.y);
 	map_chars(copymap, cpymaps, x, y);
 	if (cpymaps->exit.count != 0 || cpymaps->collectibles != 0)
-		return (freemsg(maps, cpymaps, NOTPLAYABLE), NULL);
+		return (free_doubleptr(map),
+			freemsg(maps, cpymaps, NOTPLAYABLE), NULL);
 	maps->map = map;
 	return (free_all(cpymaps), maps);
 }
